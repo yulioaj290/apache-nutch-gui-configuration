@@ -1,0 +1,43 @@
+favorito:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:favorito:index" }
+
+favorito_show:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:favorito:show" }
+
+favorito_new:
+    pattern:  /{id_archivo}/nuevo
+    defaults: { _controller: "ConfigOrionBundle:favorito:new" }
+
+favorito_create:
+    pattern:  /{id_archivo}/crear
+    defaults: { _controller: "ConfigOrionBundle:favorito:create" }
+    requirements: { _method: post }
+
+favorito_edit:
+    pattern:  /{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:favorito:edit" }
+
+favorito_update:
+    pattern:  /{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:favorito:update" }
+    requirements: { _method: post|put }
+
+favorito_delete:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:favorito:delete" }
+    requirements: { _method: post|delete }   
+
+favorito_aplicar:
+    pattern:  /{id_favorito}/aplicar
+    defaults: { _controller: "ConfigOrionBundle:favorito:aplicar" }
+
+favorito_exportar:
+    pattern:  /exportar
+    defaults: { _controller: "ConfigOrionBundle:favorito:exportar" }
+
+favorito_importar:
+    pattern:  /importar
+    defaults: { _controller: "ConfigOrionBundle:favorito:importar" }
+    requirements: { _method: post }

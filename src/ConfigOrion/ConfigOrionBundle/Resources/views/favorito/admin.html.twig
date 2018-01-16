@@ -1,0 +1,136 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div id="accordion-left" class="panel panel-default without-accordion">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Lista de Favoritos  
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="#" class="btn btn-primary active align-right margin-basic-right" role="button" data-toggle="modal" data-target="#modalImportarFavoritos" >
+                <span class="glyphicon glyphicon-import"></span> Importar favoritos
+            </a>   
+            <a href="{{ path('favorito_exportar') }}" class="btn btn-success active align-right margin-basic-right" role="button" >
+                <span class="glyphicon glyphicon-export"></span> Exportar favoritos
+            </a>
+            {% endif %}
+        </h1>
+    </div>
+    <div class="panel-body">
+        Administraci&oacute;n de configuraciones favoritas
+    </div>
+
+    <div class="list-object">
+        {% for item in favoritos %}
+        <div id="item-propiedad-{{ item.id }}" class="list-object-item-container">
+            <a href="{{ path('favorito_show', { 'id': item.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >
+                <div class="list-object-item-div-first back-favorito"></div>
+                <div class="list-object-item-div-medium perfil-property-content">
+                    <h4 class="list-object-item-heading">
+                        <p>
+                            <span class="label label-primary">{{ item.nombreArchivo }}</span>
+                                <span class="label label-warning">{% if (item.formato|lower == 'null') %}{{ 'Sin extensi&oacute;n' }}{% else %}{{ item.formato }}{% endif %}</span>
+                        </p>
+                        <p>
+                            <span class="label label-default">Ruta</span>
+                            <span class="label label-success">{{ item.rutaArchivo }}</span>
+                            <span class="label label-default">Instancia </span>
+                            <span class="label label-success">{{ item.nombreInstancia }}</span>
+                        </p>                                                         
+                    </h4> 
+                    <p class="list-object-item-text">{{ item.descripcion }}</p>
+                </div>
+                <div class="list-object-item-div-last">
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="#" rel="tooltip" data-placement="top" data-original-title="Aplicar" >
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd" onclick="setFavorito('{{ path('favorito_aplicar', {'id_favorito':item.id}) }}')">
+                            <span class="glyphicon glyphicon-ok"></span> Aplicar
+                        </button>
+                    </a>
+                    {% endif %}
+                    <a href="{{ path('favorito_show', { 'id': item.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('favorito_edit', { 'id': item.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </a>                 
+                    {% endif %}
+                </div>
+                <p class="clearfix"></p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Aplicar configuraci&oacute;n favorita</h4>
+                </div>
+                <div class="modal-body">
+                    <strong>Seleccione la instancia a la que desea aplicar la configuraci&oacute;n favorita:</strong>                                   
+                    <form id="apply_favorito" action="#" method="post">
+                                {{form_widget(instanciaForm)}}                            
+                        </form>                                       
+                    </div>   
+                    <div class="modal-footer">
+                        <button type="submit" onclick="document.getElementById('apply_favorito').submit()" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span> Aplicar
+                        </button>                                           
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="modalImportarFavoritos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Importar archivos de configuración favoritos</h4>
+                    </div>
+                    <div class="modal-body">                                
+                        <form id="formImportarFavoritos" action="{{ path('favorito_importar') }}" enctype="multipart/form-data" method="post">                              
+                            <label>Archivo (*.zip):</label>
+                            <div class="input-group">                                
+                                <span class="input-group-addon glyphicon glyphicon-import"></span>
+                                <input id="favorito-file-path" type="text" class="form-control active" />                              
+                            </div>
+                            <div class="btn_favorito_upload">
+                                <input id="favorito-btn-examinar" type="button" value="Examinar" class="btn btn-primary" />
+                            </div>
+
+                        {{ form_widget(form_upload_file) }}    
+                        </form>                                       
+                    </div>   
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="importFavorito()">
+                            <span class="glyphicon glyphicon-import"></span> Importar
+                        </button>                                           
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <script type="text/javascript">
+            $(document).ready(function (){
+                $("#favorito-btn-examinar, #favorito-file-path").click(function () {
+                    $("#favorito_import_file_archivo").click();
+                    $("#favorito_import_file_archivo").change(function(evento) {
+                        $("#favorito-file-path").val($(this).val());
+                    });
+                });
+            });
+        </script>
+
+{% endblock%} 

@@ -1,0 +1,70 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>
+    <li>Editar plugin</li>
+</ul>
+
+<h1>Editar plugin</h1>
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('plugin_update', { 'id': document.id, 'id_instancia': instancia.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_label(edit_form.ruta) }}
+    {{ form_widget(edit_form.ruta) }}
+    {{ form_label(edit_form.descripcion) }}
+    {{ form_widget(edit_form.descripcion) }}
+        <div class="hidden">{{ form_rest(edit_form) }}</div>
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-success active">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('instancia_admin', {'id': instancia.id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de plugins
+    </a>
+    <a class="btn btn-primary active" role="button" href="{{ path('plugin_admin', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-cog"></span> Administrar archivos
+    </a>
+    <button class="btn btn-danger active" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('plugin_delete', { 'id': document.id, 'id_instancia': instancia.id }) }}" method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+</div>
+
+
+{% endblock%}
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+    autocompletadoDirRequest('#configorion_configorionbundle_plugintype_ruta', '{{ url('archivo_autocompletado')}}');
+</script>
+{% endblock%}

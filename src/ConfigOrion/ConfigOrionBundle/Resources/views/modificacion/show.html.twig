@@ -1,0 +1,68 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">  
+    <li><a href="{{ path('instancia_admin', {'id': instancia_item.id}) }}">{{ instancia_item.nombre }}</a></li>  
+  {% if tipo == 'plugin' %}
+    <li><a href="{{ path('plugin_admin', {'id': plugin_id}) }}">Administrar plugin</a></li>    
+  {% endif %}
+    <li><a href="{{ path('archivo_admin', {'id': archivo.id}) }}">Administrar cambios</a></li>     
+    <li>Detalles de modificaci&oacute;n</li>
+</ul>
+
+<h1>Modificaci&oacute;n <i>&quot;{{ document.propiedad ~ ' el ' ~ document.fecha|date('d/m/Y') }}&quot;</i></h1>
+
+<div class="content-hr-both show-content">
+    <table class="table table-hover">            <tr>
+            <th>Propiedad</th>
+            <td>{{ document.propiedad }}</td>
+        </tr>            <tr>
+            <th>Fecha</th>
+            <td>{{ document.fecha|date('d/m/Y') }}</td>
+        </tr>            <tr>
+            <th>Ruta de Propiedad</th>
+            <td>{{ document.rutaPropiedad }}</td>
+        </tr>            <tr>
+            <th>
+                <button type="button" class="btn btn-danger active" data-toggle="collapse" data-target="#valorAnterior" data-original-title="Click para mostrar/ocultar" data-placement="top" rel="tooltip">
+                    Valor Anterior
+                </button>
+            </th>
+            <td>
+                <div id="valorAnterior" class="collapse {% if (document.valorAnterior|length < 100) %}{{ 'in' }}{% else %}{{'contenido-favorito'}}{% endif %}">
+                    {{ document.valorAnterior|nl2br }}
+                </div>
+            </td>
+        </tr>            <tr>
+            <th>
+                <button type="button" class="btn btn-success active" data-toggle="collapse" data-target="#valorActual" data-original-title="Click para mostrar/ocultar" data-placement="top" rel="tooltip">
+                    Valor Actual
+                </button>
+            </th>
+            <td>
+                <div id="valorActual" class="collapse {% if (document.valorActual|length < 100) %}{{ 'in' }}{% else %}{{'contenido-favorito'}}{% endif %}">
+                    {{ document.valorActual|nl2br }}
+                </div>
+            </td>
+        </tr>            <tr>
+            <th>Tipo de modificaci&oacute;n</th>
+            <td>{{ document.tipoModificacion }}</td>
+        </tr>            <tr>
+            <th>Propiedad existente</th>
+            <td>{% if(document.existePropiedad == 'TRUE') %}{{ 'Si' }}{% else %}{{ 'No' }}{% endif %}</td>
+        </tr>            <tr>
+            <th>Descripci&oacute;n</th>
+            <td>{{ document.descripcion }}</td>
+        </tr>    </table>
+
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('archivo_admin', {'id': archivo.id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de modificaciones
+    </a>
+
+
+</div>
+
+{% endblock%}

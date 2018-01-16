@@ -1,0 +1,43 @@
+perfil:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:perfil:index" }
+
+perfil_show:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:perfil:show" }
+
+perfil_new:
+    pattern:  /nuevo
+    defaults: { _controller: "ConfigOrionBundle:perfil:new" }
+
+perfil_create:
+    pattern:  /crear
+    defaults: { _controller: "ConfigOrionBundle:perfil:create" }
+    requirements: { _method: post }
+
+perfil_edit:
+    pattern:  /{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:perfil:edit" }
+
+perfil_update:
+    pattern:  /{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:perfil:update" }
+    requirements: { _method: post|put }
+
+perfil_delete:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:perfil:delete" }
+    requirements: { _method: post|delete }
+
+perfil_admin:
+    pattern:  /{id}/administrar
+    defaults: { _controller: "ConfigOrionBundle:perfil:admin" }  
+
+perfil_add:
+    pattern:  /{id_archivo}/adicionar
+    defaults: { _controller: "ConfigOrionBundle:perfil:add" }
+    requirements: { _method: post }
+
+perfil_aplicar:
+    pattern:  /{id}/aplicar
+    defaults: { _controller: "ConfigOrionBundle:perfil:aplicar" }     

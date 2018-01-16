@@ -1,0 +1,26 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Crear etiqueta</h1>
+
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('etiqueta_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Crear
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('etiqueta') }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de etiqueta
+    </a>
+        
+</div>
+
+
+{% endblock%}

@@ -1,0 +1,242 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/configorion/css/daterangepicker-bs3.css') }}" type="text/css" />
+{% endblock %}
+{% block body%}
+
+    <ul class="breadcrumb">
+        <li><a href="{{ path('instancia_admin', {'id': instancia_item.id}) }}">{{ instancia_item.nombre }}</a></li>    
+            {% if archivo_parent=='plugin' %}   
+            <li><a href="{{ path('plugin_admin', {'id': archivo_id_parent}) }}">Administrar plugin</a></li>
+            {% endif %}    
+        <li>Administrar cambios</li>
+    </ul>
+
+    <div id="accordion-left" class="panel panel-default without-accordion">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h1>Archivo <i>&quot;{{ document.nombre }}&quot;</i>
+                <a href="
+                   {% if archivo_parent=='plugin' %}
+                       {{ path('plugin_admin', { 'id': archivo_id_parent }) }}
+                   {% else %}
+                       {{ path('instancia_admin', { 'id': archivo_id_parent }) }}
+                   {% endif %}
+                   " class="btn btn-default align-right" role="button" rel="tooltip" data-placement="top" data-original-title="Subir de nivel" >
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="
+                       {% if archivo_parent=='plugin' %}
+                           {{ path('archivo_edit', { 'id_parent': archivo_id_parent, 'parent': 'plugin', 'id': document.id }) }}
+                       {% else %}
+                           {{ path('archivo_edit', { 'id_parent': archivo_id_parent, 'parent': 'instancia', 'id': document.id }) }}
+                       {% endif %}
+                       " class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                {% endif %}
+                <a href="
+                   {% if archivo_parent=='plugin' %}
+                       {{ path('archivo_show', { 'id_parent': archivo_id_parent, 'parent': 'plugin', 'id': document.id }) }}
+                   {% else %}
+                       {{ path('archivo_show', { 'id_parent': archivo_id_parent, 'parent': 'instancia', 'id': document.id }) }}
+                   {% endif %}
+                   " class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="#" class="btn btn-success active align-right margin-basic-right" role="button" data-toggle="modal" data-target="#modalArchivarModificaciones" >
+                        <span class="glyphicon glyphicon-briefcase"></span> Archivar modificaciones
+                    </a>
+                {% endif %}
+            </h1>
+        </div>
+        <div class="panel-body">
+            {{ document.descripcion }}
+        </div>
+
+        {% if ((document.nombre ~'.'~ document.formato)|lower == archivo_principal)%}
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a href="#modificaciones" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Historial de modifiaciones</a></li>
+                <li><a href="#etiquetas" data-toggle="tab"><span class="glyphicon glyphicon-tags"></span> &nbsp;Lista de etiquetas</a></li>
+            </ul>
+        {% endif %}
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="modificaciones">
+                <div class="list-object">
+                    {% for modificacion in modificaciones %}
+                        <div id="item-modificacion-{{ modificacion.id }}" class="list-object-item-container">
+                            <a href="{{ path('modificacion_show', { 'id_archivo': document.id, 'id': modificacion.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                                <div class="list-object-item-div-first back-modificacion"></div>
+                                <div class="list-object-item-div-medium">
+                                    <h4 class="list-object-item-heading">
+                                        <p><span class="label label-primary">{{ modificacion.propiedad }}</span>
+                                            <span class="label label-warning">{{ modificacion.fecha|date('d/m/Y') }}</span>
+                                            <span class="label label-default">Tipo: </span>
+                                            <span class="label label-warning">{{ modificacion.tipoModificacion }}</span>
+                                            {% if ((document.nombre ~'.'~ document.formato)|lower == archivo_principal and document.formato == 'XML')%}
+                                                <span class="label label-default">Propiedad existente: </span>
+                                                {% if(modificacion.existePropiedad == 'TRUE') %}
+                                                    <span class="label label-success">{{ 'Si' }}</span>
+                                                {% else %}
+                                                    <span class="label label-danger">{{ 'No' }}</span>
+                                                {% endif %}</p>
+                                            {% endif %}
+                                        <p><span class="label label-default">Valor actual: </span><span class="label label-success">
+                                                {% if (modificacion.valoractual != '') %}
+                                                    {{ modificacion.valoractual }}
+                                                {% else %}
+                                                    &nbsp;
+                                                {% endif %}
+                                            </span>
+                                            <span class="label label-default">Valor anterior: </span><span class="label label-danger">
+                                                {% if (modificacion.valoranterior != '') %}
+                                                    {{ modificacion.valoranterior }}
+                                                {% else %}
+                                                    &nbsp;
+                                                {% endif %}
+                                            </span></p>
+                                    </h4>
+                                    <p class="list-object-item-text">{{ modificacion.descripcion }}</p>
+                                </div>
+                                <div class="list-object-item-div-last">
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        {% if ((document.nombre ~'.'~ document.formato)|lower == archivo_principal and document.formato == 'XML' and modificacion.tipoModificacion == 'MODIFICAR' and modificacion.existePropiedad == 'TRUE') %}
+                                            <a href="#" rel="tooltip" data-placement="top" data-original-title="Añadir a Perfiles" >
+                                                <button class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="setModificacion('{{ modificacion.id }}')">
+                                                    <span class="glyphicon glyphicon-share-alt"></span>                                             
+                                                </button>
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                    <a href="{{ path('modificacion_show', { 'id_archivo': document.id, 'id': modificacion.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                                        <button type="button" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
+                                    </a>
+                                    {#
+                                    <a href="{{ path('modificacion_edit', { 'id_archivo': document.id, 'id': modificacion.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                                        <button type="button" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-edit"></span>
+                                        </button>
+                                    </a>
+                                    #}
+                                </div>
+                                <p class="clearfix"></p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="tab-pane" id="etiquetas">
+                <div class="list-object">
+                    {% for etiqueta in etiquetas %}
+                        <div id="item-etiqueta-{{ etiqueta.id }}" class="list-object-item-container">
+                            <a href="{{ path('etiqueta_show', { 'id_archivo': document.id, 'id': etiqueta.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                                <div class="list-object-item-div-first back-tag"></div>
+                                <div class="list-object-item-div-medium">
+                                    <h4 class="list-object-item-heading">
+                                        <p><span class="label label-primary">{{ etiqueta.propiedad }}</span></p>
+                                        <p><span class="label label-default">{{ etiqueta.rutaPropiedad }}</span></p>
+                                    </h4>
+                                    <p class="list-object-item-text">{{ etiqueta.valor }}</p>
+                                </div>
+                                <div class="list-object-item-div-last">
+                                    <a href="{{ path('etiqueta_show', { 'id_archivo': document.id, 'id': etiqueta.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                                        <button type="button" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
+                                    </a>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a href="{{ path('etiqueta_edit', { 'id_archivo': document.id, 'id': etiqueta.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                                            <button type="button" class="btn btn-primary">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <p class="clearfix"></p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">A&ntilde;adir a perfiles</h4>
+                    </div>
+                    <div class="modal-body">
+                        <strong>Seleccione el perfil al que desea a&ntilde;adir la propiedad:</strong>                                   
+                        <form id="add_to_perfil" action="{{ path('perfil_add', { 'id_archivo': document.id }) }}" method="post">                                     
+                            {{ form_widget(perfilesForm) }}                                           
+                        </form>                                       
+                    </div>   
+                    <div class="modal-footer">
+                        <button type="submit" onclick="document.getElementById('add_to_perfil').submit()" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span> A&ntilde;adir
+                        </button>                                           
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <div class="modal fade" id="modalArchivarModificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Archivar modificaciones anteriores a una fecha</h4>
+                    </div>
+                    <div class="modal-body">                                
+                        <form id="formArchivarModificaciones" action="{{ path('modificacion_archivar_por_archivo',{'id_archivo': document.id}) }}" method="post">      
+                            <strong>Fecha de antiguedad</strong>
+                            <div class="input-group">
+                                <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                                {{ form_widget(formArchivar.dateModificacion) }}
+                                {{ form_rest(formArchivar) }}
+                            </div>                               
+                        </form>                                       
+                    </div>   
+                    <div class="modal-footer">
+                        <button type="button" onclick="archivarModificaciones()" class="btn btn-success">
+                            <span class="glyphicon glyphicon-briefcase"></span> Archivar
+                        </button>                                           
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+    {% endblock%} 
+
+    {% block specific_javascripts %}
+        <script src="{{ asset('bundles/configorion/js/moment.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('bundles/configorion/js/daterangepicker.js') }}" type="text/javascript"></script>
+    {% endblock %}
+    {% block inline_javascripts %}
+        <script type="text/javascript">
+                            $('#configorion_configorionbundle_archivarmodificaciontype_dateModificacion').daterangepicker(
+                                    {
+                                        format: 'DD/MM/YYYY',
+                                        startDate: new Date(),
+                                        endDate: new Date(),
+                                        singleDatePicker: true,
+                                    }
+                            );
+        </script>
+    {% endblock %}

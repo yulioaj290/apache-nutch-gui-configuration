@@ -1,0 +1,36 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">  
+    <li><a href="{{ path('instancia') }}">Instancias</a></li>    
+    <li>Registrar Instancia</li>
+</ul>
+
+<h1>Registrar Instancia</h1>
+<div class="content-hr-both show-content">
+    <form action="{{ path('instancia_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-success active">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+            </button>
+        </p>
+    </form>
+</div>
+
+<ul style="display: none;" tabindex="0" id="ui-id-1" class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all"></ul>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('instancia') }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de instancias
+    </a>
+</div>
+
+{% endblock%}
+
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+    autocompletadoDirRequest('#configorion_configorionbundle_instanciatype_ruta', '{{ url('archivo_autocompletado')}}');
+</script>
+{% endblock %}

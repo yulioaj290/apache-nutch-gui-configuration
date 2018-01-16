@@ -1,0 +1,42 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Lista de etiqueta</h1>
+
+<div class="content-hr-both">
+    <div class="panel panel-default">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Propiedad</th>
+                    <th>Ruta Propiedad</th>
+                    <th>Valor</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td><a href="{{ path('etiqueta_show', { 'id': document.id }) }}">{{ document.getPropiedad() }}</a></td>
+                    <td>{{ document.rutaPropiedad }}</td>
+                    <td>{{ document.valor }}</td>
+                    <td>        <a href="{{ path('etiqueta_show', { 'id': document.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+    &nbsp;
+                        <a href="{{ path('etiqueta_edit', { 'id': document.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+    &nbsp;
+        
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-primary active" role="button" href="{{ path('etiqueta_new') }}">
+        <span class="glyphicon glyphicon-plus"></span> Crear etiqueta
+    </a>
+</div>
+
+{% endblock%}

@@ -1,0 +1,297 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/daterangepicker-bs3.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/jquery.jqplot.min.css') }}" type="text/css" />
+{% endblock %}
+
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Gr&aacute;ficos estad&iacute;sticos de modificaciones
+            <a class="btn btn-success active align-right" role="button" href="{{ path('graficos_spline') }}">
+                <span class="glyphicon glyphicon-signal"></span> Gr&aacute;fico Spline
+            </a>      
+        </h1>
+        <div class="margin-basic-top border-basic-top padding-basic-top">
+            <form action="{{ path('graficos_filter') }}" method="POST" class="form-inline" role="form">
+                <div class="form-group margin-basic-right">      
+                    {{ form_label(form.cantidad) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-sort-by-order-alt"></span>
+                        {{ form_widget(form.cantidad) }}
+                    </div>
+                </div>
+                <div class="form-group margin-basic-right">
+                    {{ form_label(form.archivo) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-file"></span>
+                        {{ form_widget(form.archivo)|raw }}
+                    </div>
+                </div>
+                <div class="form-group margin-basic-right">
+                    {{ form_label(form.fecha) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                        {{ form_widget(form.fecha) }}
+                    </div>
+                    <div class="hidden">
+                    {{ form_rest(form) }}
+                    </div>
+                </div>
+                <div class="form-group form-filter-submit">
+                    <button type="submit" class="btn btn-primary active"><span class="glyphicon glyphicon-filter"></span> Filtrar</button>
+                    <a class="btn btn-danger active" role="button" href="{{ path('graficos') }}"><span class="glyphicon glyphicon-ban-circle"></span> Restablecer</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="show-content">
+        <div class="chart-container">
+            <div class="data-chart" >
+                <span id="chart-help" class="glyphicon glyphicon-question-sign" data-trigger="hover" data-title="Filtro de aumento" data-html="true" data-content="<ul><li>Click y arrastrar para aumentar.</li><li>Doble click para restablecer.</li></ul>" data-placement="top" data-toggle="popover" data-container="body" ></span>
+                <div id="chartline-cant-modificaicones" style="height:300px;">
+                </div>
+            </div> 
+            <br />
+            <div id="chartbar-more-stable" class="data-chart" style="height:300px;"></div> 
+            <br />
+            {% if ((data_filter_archivo is defined and data_filter_archivo != 'archivo') or data_filter_archivo is not defined) %}
+            <div id="chartbar-less-stable" class="data-chart" style="height:300px;"></div> 
+            <br />
+            {% endif %}
+            <div id="chartpie" class="data-chart" style="height:300px;width:500px !important;"></div> 
+        </div>
+    </div>
+
+</div>
+{% endblock%}
+
+{% block specific_javascripts %}
+<script src="{{ asset('bundles/configorion/js/moment.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/daterangepicker.js') }}" type="text/javascript"></script>
+
+<!-- Javascript asociado a los graficos de jQPlot -->
+<script src="{{ asset('bundles/configorion/js/jquery.jqplot.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.cursor.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.dateAxisRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasAxisTickRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasAxisLabelRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasTextRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.pointLabels.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.highlighter.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.pieRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.barRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.categoryAxisRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.trendline.min.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+// Lanzando popover
+            $('#chart-help').popover();
+// Lanzamiento del DateRangePicker
+            $('#configorion_configorionbundle_graficofiltertype_fecha').daterangepicker(
+    {
+    format: 'DD/MM/YYYY',
+            startDate: new Date(),
+            endDate: new Date(),
+            opens: 'left',
+            ranges: {
+            'Hoy': [moment(), moment()],
+                    'Ayer': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                    'Últimos 7 días': [moment().subtract('days', 6), moment()],
+                    'Últimos 30 días': [moment().subtract('days', 29), moment()],
+                    'Este mes': [moment().startOf('month'), moment().endOf('month')],
+                    'Mes pasado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+            }
+    }
+    );
+// Lanzamiento de la Grafica Line de Cantidad de modificaciones
+            var cantModificaciones = [
+     {% for item in array_data_mods %}
+            [
+                    "{{ item[0] }}"
+                    ,
+                {{ item[1] }}
+            ],
+     {% endfor %}
+            ];
+            $.jqplot('chartline-cant-modificaicones', [cantModificaciones],
+            {title: 'Cantidad de modificaciones',
+                    axes: {
+                    xaxis: {
+                    renderer: $.jqplot.DateAxisRenderer,
+                            rendererOptions: {
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                            },
+                            tickOptions: {
+                            formatString: '%#d/%#m/%Y',
+                                    fontSize: '10pt',
+                                    angle: - 40
+                            }
+                    },
+                            yaxis: {
+                            tickOptions: {
+                            fontSize: '10pt',
+                                    formatString: '%d'},
+                            }
+                    },
+                    series: [{color: 'rgb(0, 175, 0)'}],
+                    seriesDefaults: {
+                    showMarker: true,
+                            pointLabels: {show: true},
+                    },
+                    highlighter: {
+                    show: true,
+                            sizeAdjust: 8,
+                            tooltipOffset: 3,
+                    },
+                    cursor: {
+                    show: true,
+                            zoom: true,
+                            looseZoom: true,
+                            followMouse: false,
+                    },
+            });
+// Lanzamiento de Grafico de Pie para los tipos de modificaciones
+            /*    
+             var tipoModifiacion = [['INSERTAR', 7], ['MODIFICAR', 15], ['ELIMINAR', 2]];
+             */
+            var tipoModifiacion = [
+     {% for item in array_data_mods_tipo %}
+            [
+                    "{{ item[0] }}"
+                    ,
+                {{ item[1] }}
+            ],
+     {% endfor %}
+            ];
+            $.jqplot('chartpie', [tipoModifiacion], {
+            title: 'Cantidad de modificaciones por tipo',
+                    seriesColors: ["rgb(0, 51, 153)", "rgb(0, 102, 0)", "rgb(255, 153, 0)"],
+                    grid: {
+                    drawBorder: true,
+                            drawGridlines: false,
+                            background: '#ffffff',
+                            shadow: true
+                    },
+                    axesDefaults: {
+                    },
+                    seriesDefaults: {
+                    renderer: $.jqplot.PieRenderer,
+                            rendererOptions: {
+                            showDataLabels: true,
+                                    sliceMargin: 2,
+                                    startAngle: - 90,
+                                    dataLabelPositionFactor: 1.15,
+                                    dataLabels: 'value',
+                                    padding: 30,
+                            },
+                            shadow: false,
+                    },
+                    legend: {
+                    show: true,
+                            rendererOptions: {
+                            numberRows: 3,
+                                    numberColumns: 1,
+                            },
+                            location: 'e',
+                            xoffset: 70,
+                    }
+            });
+// Lanzamiento de Grafico de Barras de registros Mas Modificados
+            /*   
+             var lessStable = [['nutch.xml', 2], ['seeds', 10], ['schema.xml', 6],
+             ['lib-regex-fix.xml', 8], ['prefix-urlfilter.txt', 2]];
+             */
+
+            var lessStable = [
+     {% for item in array_mods_archivo_des %}
+            [
+                    "{{ item[0] }}"
+                    ,
+                {{ item[1] }}
+            ],
+     {% endfor %}
+            ];
+            $.jqplot('chartbar-more-stable', [lessStable], {
+        {% if (data_filter_archivo is defined and data_filter_archivo == 'archivo') %}
+            title: 'Propiedades con más modificaciones',
+        {% else %}
+            title: 'Archivos con más modificaciones',
+        {% endif %}
+            seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+                    rendererOptions: {
+                    varyBarColor: true,
+                    },
+                    pointLabels: {show: true, formatString: '%d'}
+            },
+                    axesDefaults: {
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    },
+                    axes: {
+                    xaxis: {
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                            tickOptions: {
+                            angle: - 20,
+                                    fontSize: '10pt',
+                            },
+                            rendererOptions: {
+                            varyBarColor: true,
+                            }
+                    },
+                            yaxis: {
+                            tickOptions: {
+                            formatString: '%d'
+                            }
+                            }
+                    }
+            });
+// Lanzamiento de Grafico de Barras de registros Menos Modificados
+            /*    
+             var moreStable = [['nutch.xml', 7], ['seeds', 9], ['schema.xml', 2],
+             ['lib-regex-fix.xml', 5], ['prefix-urlfilter.txt', 3]];
+             */
+            var moreStable = [
+     {% for item in array_mods_archivo_asc %}
+            [
+                    "{{ item[0] }}"
+                    ,
+                {{ item[1] }}
+            ],
+     {% endfor %}
+            ];
+            $.jqplot('chartbar-less-stable', [moreStable], {
+            title: 'Archivos con menos modificaciones',
+                    seriesDefaults: {
+                    renderer: $.jqplot.BarRenderer,
+                            rendererOptions: {
+                            varyBarColor: true,
+                            },
+                            pointLabels: {show: true, formatString: '%d'}
+                    },
+                    axesDefaults: {
+                    tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    },
+                    axes: {
+                    xaxis: {
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                            tickOptions: {
+                            angle: - 20,
+                                    fontSize: '10pt',
+                            }
+                    },
+                            yaxis: {
+                            tickOptions: {
+                            formatString: '%d'
+                            }
+                            }
+                    }
+            });
+</script>
+{% endblock %}

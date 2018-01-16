@@ -1,0 +1,73 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/daterangepicker-bs3.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/reporte.css') }}" type="text/css" />  
+{% endblock %}
+
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Reporte de modificaciones</h1>
+        <div class="margin-basic-top border-basic-top padding-basic-top">
+            <form id="form-report" action="{{ path('reporte_filtrar') }}" method="POST" class="form-inline" role="form">
+                <div class="form-group margin-basic-right">      
+                        {{ form_label(reporteFilter.instancia) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-file"></span>
+                        {{ form_widget(reporteFilter.instancia) }}
+                    </div>
+                </div>
+                <div class="form-group margin-basic-right">      
+                        {{ form_label(reporteFilter.fecha) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                        {{ form_widget(reporteFilter.fecha) }}
+                    </div>
+                </div>
+                <div class="form-group reporte-form-submit">
+                    <button type="submit" class="btn btn-primary active" onclick="setActionReporte('{{ path('reporte_filtrar') }}')"><span class="glyphicon glyphicon-filter"></span> Filtrar</button>
+                            {% if (export == true)  %}
+                    <button type="submit" class="btn btn-success active" onclick="setActionReporte('{{ path('reporte_pdf') }}')"><span class="glyphicon glyphicon-export"></span> Exportar</button>
+                            {% endif %}
+                </div>
+                        {{ form_rest(reporteFilter) }}
+            </form>
+        </div>
+    </div>
+    {% block informe %}
+
+    {% endblock %}    
+</div>
+
+{% endblock %}
+
+{% block specific_javascripts %}
+<script src="{{ asset('bundles/configorion/js/moment.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/daterangepicker.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+                        // Lanzamiento del DateRangePicker
+                        $('#configorion_reportefiltertype_fecha').daterangepicker(
+                                {
+                                    format: 'DD/MM/YYYY',
+                                    startDate: new Date(),
+                                    endDate: new Date(),
+                                    opens: 'right',
+                                    ranges: {
+                                        'Hoy': [moment(), moment()],
+                                        'Ayer': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                                        'Últimos 7 días': [moment().subtract('days', 6), moment()],
+                                        'Últimos 30 días': [moment().subtract('days', 29), moment()],
+                                        'Este mes': [moment().startOf('month'), moment().endOf('month')],
+                                        'Mes pasado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                                    }
+                                }
+                        );
+
+</script>
+{% endblock %}

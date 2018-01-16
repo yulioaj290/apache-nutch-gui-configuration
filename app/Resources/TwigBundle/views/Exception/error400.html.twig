@@ -1,0 +1,22 @@
+{% extends 'ConfigOrionBundle::layoutError.html.twig' %}
+{% block body%}
+
+<div class="jumbotron">
+    <h1>Solicitud incorrecta!!!</h1>
+        <p>
+           {% if exception.message == 'ERROR_SYSTEM_PROPERTY' %}
+                Ha ocurrido un error crítico durante la comprobación de las propiedades del sistema. Consulte este problema con el administrador.
+           {% elseif exception.message == 'ERROR_SYSTEM_RECONOCIMIENTO' %}
+                Ha ocurrido un error crítico durante la comprobación de los archivos registrados en el sistema. Consulte este problema con el administrador.
+           {% else %}
+                La solicitud contiene sintaxis err&oacute;nea y no deber&iacute;a repetirse. Por favor dir&iacute;jase a la p&aacute;gina principal de la aplicaci&oacute;n para continuar.
+           {% endif %}
+        </p>
+        <hr style="border: 1px solid #AAAAAA;" />
+        <p>
+            <a href="{{ path('instancia') }}" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-home"></span> P&aacute;gina inicial</a>
+        </p>
+    </div> 
+
+
+{% endblock%}

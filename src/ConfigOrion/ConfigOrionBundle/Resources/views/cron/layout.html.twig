@@ -1,0 +1,50 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+    <!-- Le styles -->
+    {% stylesheets
+        '@bootstrap_less'
+        'bundles/configorion/css/main.css'
+        combine=true
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block body%}
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-info">{{ flashMessage }}</div>
+    {% endfor %}
+
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-error">{{ flashMessage }}</div>
+    {% endfor %}
+
+    {% block content %}
+    {% endblock %}
+
+    <div class="modal" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal" href="#">×</a>
+                    <h3></h3>
+                </div>
+                <div class="modal-body">
+                    <pre style="height: 200px; overflow: auto;">test</pre>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default btn-primary" data-dismiss="modal" href="#">{{ 'Close' | trans({}, 'ConfigOrionBundle') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock%} 
+
+{% block specific_javascripts %}
+    <script src="{{ asset('bundles/configorion/js/script_cron.js') }}" type="text/javascript"></script>
+{% endblock %}

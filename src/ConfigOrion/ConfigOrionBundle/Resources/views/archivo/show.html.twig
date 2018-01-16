@@ -1,0 +1,121 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+  {% if parent=='plugin' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia_item.id}) }}">{{ instancia_item.nombre }}</a></li>    
+    <li><a href="{{ path('plugin_admin', {'id': plugin.id}) }}">Administrar plugin</a></li>
+  {% elseif parent=='instancia' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>   
+  {% endif %}    
+    <li>Detalles de archivo</li>
+</ul>
+
+<h1>Archivo <i>&quot;{{ document.nombre }}{% if(document.formato != 'NULL') %}{{ '.' ~ document.formato|lower }}{% endif %}&quot; </i></h1>
+
+<div class="content-hr-both show-content">
+    <table class="table table-hover">            <tr>
+            <th>Nombre</th>
+            <td>{{ document.nombre }}</td>
+        </tr>            <tr>
+            <th>Ruta</th>
+            <td>{{ document.ruta }}</td>
+        </tr>            <tr>
+            <th>Formato</th>
+            <td>{% if(document.formato|lower == 'null') %}
+                    {{ 'Sin extensi&oacute;n' }}
+                {% else %}
+                    {{ document.formato }}
+                {% endif %}</td>
+        </tr>             <tr>
+            <th>Descripci&oacute;n</th>
+            <td>{{ document.descripcion }}</td>
+        </tr>           <tr>
+            <th>
+                <button type="button" class="btn btn-success active" data-toggle="collapse" data-target="#contenido" data-original-title="Click para mostrar/ocultar" data-placement="top" rel="tooltip">
+                    Contenido
+                </button>
+            </th>
+            <td>
+                <div id="contenido" class="collapse {% if (document.contenido|length < 100) %}{{ 'in' }}{% else %}{{'contenido-favorito'}}{% endif %}">
+                    {{ document.contenido|nl2br }}
+                </div>
+            </td>
+        </tr>   
+    </table>
+
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="
+            {% if parent == 'instancia' %}
+                {{ path('instancia_admin', {'id': instancia.id}) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('plugin_admin', {'id': plugin.id}) }}
+            {% endif %}
+       ">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de archivos
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success active" role="button" href="
+    {% if parent == 'instancia' %}
+        {{ path('archivo_edit', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id  }) }}
+    {% elseif parent == 'plugin' %}
+        {{ path('archivo_edit', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id  }) }}
+    {% endif %}
+       ">
+        <span class="glyphicon glyphicon-edit"></span> Editar contenido
+    </a>
+    <a class="btn btn-warning active" role="button" href="
+    {% if parent == 'instancia' %}
+        {{ path('archivo_data_edit', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id  }) }}
+    {% elseif parent == 'plugin' %}
+        {{ path('archivo_data_edit', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id  }) }}
+    {% endif %}
+       ">
+        <span class="glyphicon glyphicon-file"></span> Editar datos de archivo
+    </a>
+    {% endif %}
+    <a class="btn btn-primary active" role="button" href="{{ path('archivo_admin', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-cog"></span> Administrar cambios
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <button class="btn btn-danger active" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="
+            {% if parent == 'instancia' %}
+                {{ path('archivo_delete', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id }) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('archivo_delete', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id }) }}
+            {% endif %}
+                          " method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {% endif %}
+
+
+</div>
+
+{% endblock%}

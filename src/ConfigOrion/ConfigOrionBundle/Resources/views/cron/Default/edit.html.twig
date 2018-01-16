@@ -1,0 +1,29 @@
+{% extends 'ConfigOrionBundle:cron:layout.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-default accordion-left">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h1>{{ 'Edit a cron' | trans({}, 'ConfigOrionBundle') }}
+                <a href="
+                {% if (instancia_id is defined) %}
+                    {{ path('cron_admin', {'id' : instancia_id}) }}
+                {% else %}
+                    {{ path('cron_index') }}
+                {% endif %}
+                " class="btn btn-default align-right" role="button" rel="tooltip" data-placement="top"
+                   data-original-title="{{ 'Level up' | trans({}, 'ConfigOrionBundle') }}">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <form role="form" method="post" action="#">
+                {% include 'ConfigOrionBundle:cron/Default:form.html.twig' with {'form': form} %}
+                <input type="submit" class="btn btn-success adjust"
+                       value="{{ 'Edit' | trans({}, 'ConfigOrionBundle') }}"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}

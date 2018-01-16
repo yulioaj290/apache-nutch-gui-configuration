@@ -1,0 +1,136 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Editar archivo</h1>
+
+<div class="content-hr-both show-content">
+    <form action="
+            {% if parent == 'instancia' %}
+                {{ path('archivo_update', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id  }) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('archivo_update', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id  }) }}
+            {% endif %}
+          " method="post" {{ form_enctype(edit_form) }}>
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <span class="glyphicon glyphicon-th-list"></span> Propiedades y descripci&oacute;n del archivo
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="element-float-left margin-basic-right border-basic-right padding-basic-right">
+                            {{ form_row(edit_form.nombre) }}
+                            {{ form_row(edit_form.ruta) }}
+                        </div>
+                        <div class="element-float-left margin-basic-right border-basic-right padding-basic-right">
+                            {{ form_row(edit_form.formato) }}
+                            <p>Nota: El contenido puede ser modificado<br /> en la secci&oacute;n de abajo.</p>
+                        </div>
+                        <div class="element-float-left margin-basic-right">    
+                            {{ form_row(edit_form.descripcion) }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            <span class="glyphicon glyphicon-list-alt"></span> Contenido del archivo
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                    {% if (formato != 'XML') %}
+                        <div class="only-textarea">{{ form_row(edit_form.contenido) }}</div>
+                    {% else %}
+                        {{ html }}
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            <span class="glyphicon glyphicon-comment"></span> Descripci&oacute;n de la modificaci&oacute;n
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="only-textarea">{{ form_row(edit_form.descripcionModificacion) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-edit"></span> Editar
+            </button>
+        </p>
+        <div class="hidden">{{ form_rest(edit_form) }}</div>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="
+            {% if parent == 'instancia' %}
+                {{ path('instancia_admin', {'id': instancia.id}) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('plugin_admin', {'id': plugin.id}) }}
+            {% endif %}
+       ">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de archivos
+    </a>
+    <a class="btn btn-success active" role="button" href="{{ path('archivo_admin', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-cog"></span> Administrar cambios
+    </a>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="
+                            {% if parent == 'instancia' %}
+                                {{ path('archivo_delete', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id }) }}
+                            {% elseif parent == 'plugin' %}
+                                {{ path('archivo_delete', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id }) }}
+                            {% endif %}
+                          " method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+</div>
+
+
+{% endblock%}

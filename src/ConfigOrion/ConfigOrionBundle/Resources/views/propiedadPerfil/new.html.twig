@@ -1,0 +1,25 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Crear propiedadPerfil</h1>
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('propiedadperfil_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Crear
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('propiedadperfil') }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de propiedadPerfil
+    </a>
+        
+</div>
+
+
+{% endblock%}

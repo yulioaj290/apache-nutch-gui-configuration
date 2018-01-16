@@ -1,0 +1,101 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+         ConfigOrion\ConfigOrionBundle\Document\usuario: { algorithm: sha512, iterations: 1, encode_as_base64: false }
+         Symfony\Component\Security\Core\User\User: { algorithm: sha512, iterations: 1, encode_as_base64: false }
+
+    role_hierarchy:
+        ROLE_ADMIN:         ROLE_USER
+        ROLE_SUPER_ADMIN:   [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        chain_provider:
+            chain:
+                providers: [usuarios, in_memory]
+                
+        usuarios:
+            mongodb: { class: ConfigOrionBundle:usuario}
+                
+        in_memory:
+            memory:
+                users:
+                    admin: { password: 836bc6397d06de5f635683cff01822564683b57c5298c38bd389628685d9ce9d74cba952fc80ac305a6dd1d122bb041dfa93377880d478f27b99da3fafc05bf6, roles: [ 'ROLE_SUPER_ADMIN' ] }
+
+    firewalls:
+        frontend:
+            pattern:    ^/
+            anonymous:  ~
+            form_login: 
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /reconocimiento
+                always_use_default_target_path: true
+            logout:
+                path: usuario_logout
+                target: /login
+                invalidate_session: false
+   
+   
+    access_control:
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # ------------------  USUARIO -------------------------------
+        - { path: ^/reconocimiento, roles: ROLE_USER }
+        
+        - { path: ^/perfil/$, roles: ROLE_USER }
+        - { path: ^/perfil/.+/ver, roles: ROLE_USER }
+        - { path: ^/perfil/.+/administrar, roles: ROLE_USER }
+        
+        - { path: ^/instancia/$, roles: ROLE_USER }
+        - { path: ^/instancia/.+/ver, roles: ROLE_USER }
+        - { path: ^/instancia/.+/administrar, roles: ROLE_USER }
+        
+        - { path: ^/plugin/$, roles: ROLE_USER }
+        - { path: ^/plugin/instancia/.+/.+/ver, roles: ROLE_USER }
+        - { path: ^/plugin/.+/administrar, roles: ROLE_USER }
+        
+        - { path: ^/archivo/$, roles: ROLE_USER }
+        - { path: ^/archivo/.+/.+/.+/ver, roles: ROLE_USER }
+        - { path: ^/archivo/.+/administrar, roles: ROLE_USER }
+        
+        - { path: ^/etiqueta/$, roles: ROLE_USER }
+        - { path: ^/etiqueta/archivo/.+/.+/ver, roles: ROLE_USER }
+        
+        - { path: ^/modificacion/$, roles: ROLE_USER }
+        - { path: ^/modificacion/archivo/.+/.+/ver, roles: ROLE_USER }
+        
+        - { path: ^/propiedadperfil/$, roles: ROLE_USER }       
+        - { path: ^/propiedadperfil/.+/.+/ver, roles: ROLE_USER }       
+        
+        - { path: ^/favorito/$, roles: ROLE_USER }
+        - { path: ^/favorito/.+/ver, roles: ROLE_USER }
+        
+        - { path: ^/graficos, roles: ROLE_USER }
+        - { path: ^/reporte, roles: ROLE_USER }    
+        
+        - { path: ^/usuario/.+/perfil, roles: ROLE_USER }    
+        - { path: ^/usuario/.+/password, roles: ROLE_USER }     
+        
+        # ------------------  ADMINISTRADOR -------------------------
+        - { path: ^/sistema/$, roles: ROLE_ADMIN }
+        - { path: ^/sistema/.+/ver, roles: ROLE_ADMIN }         
+        - { path: ^/usuario/$, roles: ROLE_ADMIN } 
+        - { path: ^/usuario/.+/ver, roles: ROLE_ADMIN }
+        - { path: ^/instancia, roles: ROLE_ADMIN }
+        - { path: ^/plugin, roles: ROLE_ADMIN }
+        - { path: ^/archivo, roles: ROLE_ADMIN }
+        - { path: ^/modificacion, roles: ROLE_ADMIN }
+        - { path: ^/etiqueta, roles: ROLE_ADMIN }
+        - { path: ^/perfil, roles: ROLE_ADMIN }
+        - { path: ^/favorito, roles: ROLE_ADMIN }
+        - { path: ^/propiedadperfil, roles: ROLE_ADMIN }  
+        - { path: ^/cron, roles: ROLE_ADMIN }
+        
+        # ------------------  SUPER ADMINISTRADOR -------------------
+        - { path: ^/sistema, roles: ROLE_SUPER_ADMIN }              
+        - { path: ^/usuario, roles: ROLE_SUPER_ADMIN }        
+

@@ -1,0 +1,63 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Editar modificaci&oacute;n</h1>
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('modificacion_update', { 'id': document.id, 'id_archivo': archivo.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="element-float-left margin-basic-right border-basic-right padding-basic-right">
+            {{ form_row(edit_form.fecha) }}
+            {{ form_row(edit_form.propiedad) }}
+            {{ form_row(edit_form.rutaPropiedad) }}
+            {{ form_row(edit_form.valorAnterior) }}
+        </div>
+        <div class="element-float-left">
+            {{ form_row(edit_form.valorActual) }}
+            {{ form_row(edit_form.descripcion) }}
+        </div>
+        <div class="hidden">{{ form_rest(edit_form) }}</div>
+        <div class="clearfix"></div>
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-edit"></span> Editar
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('archivo_admin', {'id': archivo.id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de modificaciones
+    </a>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('modificacion_delete', { 'id': document.id, 'id_archivo': archivo.id }) }}" method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
+    
+</div>
+
+
+{% endblock%}

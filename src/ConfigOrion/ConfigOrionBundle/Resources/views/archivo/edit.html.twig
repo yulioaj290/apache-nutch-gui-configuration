@@ -1,0 +1,208 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+  {% if parent=='plugin' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia_item.id}) }}">{{ instancia_item.nombre }}</a></li>    
+    <li><a href="{{ path('plugin_admin', {'id': plugin.id}) }}">Administrar plugin</a></li>
+  {% elseif parent=='instancia' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>   
+  {% endif %}    
+    <li>Editar contenido de archivo</li>
+</ul>
+
+<h1>Editar contenido de <i>"{{ document.nombre }}{% if(document.formato != 'NULL') %}{{ '.' ~ document.formato|lower }}{% endif %}"</i></h1>
+
+<div class="content-hr-both show-content">
+    <form action="
+            {% if parent == 'instancia' %}
+                {{ path('archivo_update', { 'id': document.id, 'parent': parent, 'id_parent': instancia.id  }) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('archivo_update', { 'id': document.id, 'parent': parent, 'id_parent': plugin.id  }) }}
+            {% endif %}
+          " method="post" {{ form_enctype(edit_form) }}>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            <span class="glyphicon glyphicon-list-alt"></span> Contenido del archivo
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body panel-edit-content">
+                    {% if (document.formato != 'XML') %}
+                        <div class="only-textarea">{{ form_row(edit_form.contenido) }}</div>
+                    {% else %}
+                        <div class="panel-group" id="accordionProperty">
+                        {% if ((document.nombre ~'.'~ document.formato)|lower == archivo_principal and document.formato == 'XML') %}
+                            {{ html|raw }}
+                        {% else %}
+                            <div class="form-xml-generic">
+                            {{ html|raw }}
+                            </div>
+                        {% endif %}
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if ((document.nombre ~'.'~ document.formato)|lower == archivo_principal and document.formato == 'XML') %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Insertar nueva propiedad en el archivo
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{ form_row(new_property_form.nameNewProperty) }}
+                        {{ form_row(new_property_form.valueNewProperty) }}
+                        {{ form_row(new_property_form.descNewProperty) }}
+                    </div>
+                </div>
+            </div>
+            {% elseif ((document.nombre ~'.'~ document.formato)|lower != archivo_principal and document.formato == 'XML') %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Insertar nueva etiqueta en el archivo
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="only-textarea">
+                        {{ form_row(new_generic_property_form.newGenericRuta) }}
+                        {{ form_row(new_generic_property_form.newGenericProperty) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                            <span class="glyphicon glyphicon-comment"></span> Descripci&oacute;n de la modificaci&oacute;n <span style="color: #a90202;">(Obligatorio)</span>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="only-textarea">{{ form_row(edit_form.descripcionModificacion) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-success active">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+            </button>
+        </p>
+        <div class="hidden">{{ form_rest(edit_form) }}</div>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="
+            {% if parent == 'instancia' %}
+                {{ path('instancia_admin', {'id': instancia.id}) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('plugin_admin', {'id': plugin.id}) }}
+            {% endif %}
+       ">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de archivos
+    </a>
+    <a class="btn btn-primary active" role="button" href="{{ path('archivo_admin', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-cog"></span> Administrar cambios
+    </a>
+
+    <div class="modal fade" id="modalDeleteProperty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Atenci&oacute;n</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar esta propiedad?                                  
+                </div>   
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-danger" role="button" id="confirmDeleteProperty">
+                        <span class="glyphicon glyphicon-remove"></span> Si
+                    </a>                                       
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="modal fade" id="modalDeleteGenericProperty" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Atenci&oacute;n</h4>
+            </div>
+            <div class="modal-body">
+                ¿Est&aacute; seguro que desea eliminar esta propiedad?                                     
+                <form id="deleteGenericPropertyXml" action="
+                            {% if parent == 'instancia' %}
+                                {{ path('archivo_delete_generic_property', {'id': document.id, 'parent': parent, 'id_parent': instancia.id}) }}
+                            {% elseif parent == 'plugin' %}
+                                {{ path('archivo_delete_generic_property', {'id': document.id, 'parent': parent, 'id_parent': plugin.id}) }}
+                            {% endif %} 
+                      " method="post">
+                       {{ form_widget(deleteGenericPropertyForm) }}                                           
+                </form>                                   
+            </div>   
+            <div class="modal-footer">
+                <button type="submit" onclick="document.getElementById('deleteGenericPropertyXml').submit()" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span> Si
+                </button>                                        
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{#
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">A&ntilde;adir a perfiles</h4>
+            </div>
+            <div class="modal-body">
+                <strong>Seleccione el perfil al que desea a&ntilde;adir la propiedad:</strong>                                   
+                <form id="add_to_perfil" action="{{ path('perfil_add', {'id_archivo': document.id}) }}" method="post">                                     
+                                          {{ form_widget(perfilesForm) }}                                           
+                </form>                                       
+            </div>   
+            <div class="modal-footer">
+                <button type="submit" onclick="document.getElementById('add_to_perfil').submit()" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span> A&ntilde;adir
+                </button>                                           
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+#}
+</div>
+
+{% endblock%}

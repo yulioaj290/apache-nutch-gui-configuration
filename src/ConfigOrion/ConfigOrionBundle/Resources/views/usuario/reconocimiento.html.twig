@@ -1,0 +1,54 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div class="panel panel-danger accordion-left" >
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1><span class="glyphicon glyphicon-remove-sign"></span> Atenci&oacute;n!!! Archivos inconsistentes
+            <a href="{{ path('instancia') }}" class="btn btn-default active align-right" role="button" >
+                <span class="glyphicon glyphicon-th-list"></span> Lista de instancias
+            </a>
+        </h1>
+    </div>
+
+    <div class="panel-body">
+        Estos archivos han sido cambiados manualmente sin el uso del sistema. Se recomienda que corrija las diferencias entre los archivos reales y los registrados en la aplicaci&oacute;n.<br />
+        Puede elegir una de las opciones de cada archivo para seleccionar la versi&oacute;n que desea conservar. 
+        <ul>
+            <li><b>Vesi&oacute;n sistema:</b> Escribe el archivo real con el contenido del archivo registrado en el sistema.</li>
+            <li><b>Vesi&oacute;n real:</b> Escribe el archivo registrado en el sistema con el contenido del archivo real. <br /><i style="color: #990000;">(Esta opci&oacute;n har&aacute; que se borren todas las etiquetas y propiedades de perfiles asociadas al archivo registrado en el sistema).</i></li>
+        </ul>
+        <div class="list-object">
+            {% for archivo in archiosCambiados %}
+            <div id="item-modificacion-{{ archivo.id }}" class="list-object-item-container container-danger">
+                <a href="#" class="list-object-item">
+                    <div class="list-object-item-div-medium">
+                        <h4 class="list-object-item-heading">
+                            <span class="label label-primary">{{ archivo.nombre }}</span>
+                            <span class="label label-warning">{% if(archivo.formato|lower == 'null') %}{{ 'Sin extensi&oacute;n' }}{% else %}{{ archivo.formato }}{% endif %}</span>
+                            <span class="label label-default">{{ archivo.ruta }}</span>
+                        </h4>
+                        <p class="list-object-item-text">{{ archivo.descripcion }}</p>
+                    </div>
+                    <div class="list-object-item-div-last">
+                        <a href="{{ path('reconocimiento_sistema', { 'id': archivo.id}) }}" rel="tooltip" data-placement="top" data-original-title="Conservar vesi&oacute;n del sistema" >
+                            <button type="button" class="btn btn-success active" >
+                                Versi&oacute;n sistema
+                            </button>
+                        </a>
+                        <a href="{{ path('reconocimiento_real', { 'id': archivo.id}) }}" rel="tooltip" data-placement="top" data-original-title="Conservar versi&oacute;n real" >
+                            <button type="button" class="btn btn-primary active">
+                                Versi&oacute;n real
+                            </button>
+                        </a>
+                    </div>
+                    <p class="clearfix"></p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% endblock%}

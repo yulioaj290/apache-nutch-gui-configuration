@@ -1,0 +1,8 @@
+config_orion:
+    resource: "@ConfigOrionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+config_orion_routing:
+    resource: "@ConfigOrionBundle/Resources/config/routing.yml"
+    prefix:   /

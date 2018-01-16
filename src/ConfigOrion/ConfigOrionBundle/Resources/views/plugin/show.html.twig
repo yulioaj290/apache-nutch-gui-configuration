@@ -1,0 +1,70 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>
+    <li>Detalles de plugin</li>
+</ul>
+
+<h1>Plugin <i>&quot;{{ document.nombre }}&quot;</i></h1>
+
+<div class="content-hr-both show-content">
+    <table class="table table-hover">            <tr>
+            <th>Nombre</th>
+            <td>{{ document.nombre }}</td>
+        </tr>            <tr>
+            <th>Ruta</th>
+            <td>{{ document.ruta }}</td>
+        </tr>            <tr>
+            <th>Descripci&oacute;n</th>
+            <td>{{ document.descripcion }}</td>
+        </tr>    </table>
+
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('instancia_admin', {'id': instancia.id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de plugins
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a class="btn btn-success active" role="button" href="{{ path('plugin_edit', { 'id': document.id, 'id_instancia': instancia.id }) }}">
+        <span class="glyphicon glyphicon-edit"></span> Editar
+    </a>
+    {% endif %}
+    <a class="btn btn-primary active" role="button" href="{{ path('plugin_admin', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-cog"></span> Administrar archivos
+    </a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <button class="btn btn-danger active" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+    {% endif %}
+    
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('plugin_delete', { 'id': document.id, 'id_instancia': instancia.id }) }}" method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {% endif %}
+
+</div>
+
+{% endblock%}

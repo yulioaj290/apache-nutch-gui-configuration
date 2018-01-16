@@ -1,0 +1,30 @@
+assetic:
+    bundles:        [ConfigOrionBundle]
+    filters:
+        phpcssembed: ~
+        lessphp:
+            file: %kernel.root_dir%/../vendor/leafo/lessphp/lessc.inc.php
+    assets:
+        jquery_js:
+            inputs:
+                - '%kernel.root_dir%/../components/jquery/jquery.min.js'
+        bootstrap_js:
+            inputs:
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-transition.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-alert.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-modal.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-dropdown.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-scrollspy.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-tab.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-tooltip.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-popover.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-button.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-collapse.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-carousel.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-typeahead.js'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/js/bootstrap-affix.js'
+        bootstrap_less:
+            inputs:
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less'
+                - '%kernel.root_dir%/../vendor/twbs/bootstrap/less/responsive.less'
+            filters: [lessphp,phpcssembed]

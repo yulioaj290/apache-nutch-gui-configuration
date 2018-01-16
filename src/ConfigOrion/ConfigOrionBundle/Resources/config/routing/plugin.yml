@@ -1,0 +1,46 @@
+plugin:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:plugin:index" }
+
+plugin_show:
+    pattern:  /instancia/{id_instancia}/{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:plugin:show" }
+
+plugin_new:
+    pattern:  /instancia/{id_instancia}/nuevo
+    defaults: { _controller: "ConfigOrionBundle:plugin:new" }
+
+plugin_create:
+    pattern:  /instancia/{id_instancia}/crear
+    defaults: { _controller: "ConfigOrionBundle:plugin:create" }
+    requirements: { _method: post }
+
+plugin_edit:
+    pattern:  /instancia/{id_instancia}/{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:plugin:edit" }
+
+plugin_update:
+    pattern:  /instancia/{id_instancia}/{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:plugin:update" }
+    requirements: { _method: post|put }
+
+plugin_delete:
+    pattern:  /instancia/{id_instancia}/{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:plugin:delete" }
+    requirements: { _method: post|delete }
+
+plugin_admin:
+    pattern:  /{id}/administrar
+    defaults: { _controller: "ConfigOrionBundle:plugin:admin" }
+   
+plugin_import:
+    pattern:  /{id_instancia}/detectar
+    defaults: { _controller: "ConfigOrionBundle:plugin:detectar" }
+   
+plugin_activar:
+    pattern:  /{instancia}/{id_plugin}/activar
+    defaults: { _controller: "ConfigOrionBundle:plugin:activar" }
+    
+plugin_desactivar:
+    pattern:  /{instancia}/{id_plugin}/desactivar
+    defaults: { _controller: "ConfigOrionBundle:plugin:desactivar" }

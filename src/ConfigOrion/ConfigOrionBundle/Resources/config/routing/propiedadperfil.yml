@@ -1,0 +1,34 @@
+propiedadperfil:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:index" }
+
+propiedadperfil_show:
+    pattern:  /{perfil}/{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:show" }
+
+propiedadperfil_new:
+    pattern:  /nuevo
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:new" }
+
+propiedadperfil_create:
+    pattern:  /crear
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:create" }
+    requirements: { _method: post }
+
+propiedadperfil_edit:
+    pattern:  /{perfil}/{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:edit" }
+
+propiedadperfil_update:
+    pattern:  /{perfil}/{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:update" }
+    requirements: { _method: post|put }
+
+propiedadperfil_delete:
+    pattern:  /{perfil}/{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:delete" }
+    requirements: { _method: post|delete }
+
+propiedadperfil_aplicar:
+    pattern:  /{propiedad}/aplicar
+    defaults: { _controller: "ConfigOrionBundle:propiedadPerfil:aplicar" }

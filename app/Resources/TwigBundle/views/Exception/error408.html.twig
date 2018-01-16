@@ -1,0 +1,14 @@
+{% extends 'ConfigOrionBundle::layoutError.html.twig' %}
+{% block body%}
+
+<div class="jumbotron">
+    <h1>Tiempo de espera agotado!!!</h1>
+    <p>Ha expirado el tiempo de espera de la respuesta a la solicitud. Por favor dir&iacute;jase a la p&aacute;gina principal de la aplicaci&oacute;n para continuar.</p>
+    <hr style="border: 1px solid #AAAAAA;" />
+    <p>
+        <a href="{{ path('instancia') }}" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-home"></span> P&aacute;gina inicial</a>
+    </p>
+</div> 
+
+
+{% endblock%}

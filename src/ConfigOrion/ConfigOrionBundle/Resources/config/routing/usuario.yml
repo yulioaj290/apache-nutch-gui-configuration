@@ -1,0 +1,52 @@
+usuario:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:usuario:index" }
+
+usuario_show:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:usuario:show" }
+
+usuario_new:
+    pattern:  /nuevo
+    defaults: { _controller: "ConfigOrionBundle:usuario:new" }
+
+usuario_create:
+    pattern:  /crear
+    defaults: { _controller: "ConfigOrionBundle:usuario:create" }
+    requirements: { _method: post }
+
+usuario_edit:
+    pattern:  /{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:usuario:edit" }
+
+usuario_update:
+    pattern:  /{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:usuario:update" }
+    requirements: { _method: post|put }
+
+usuario_delete:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:usuario:delete" }
+    requirements: { _method: post|delete }
+
+usuario_perfil:
+    pattern:  /{id}/perfil
+    defaults: { _controller: "ConfigOrionBundle:usuario:perfil" }
+
+usuario_change_perfil:
+    pattern:  /{id}/perfil/cambiar
+    defaults: { _controller: "ConfigOrionBundle:usuario:changePerfil" }
+
+usuario_update_perfil:
+    pattern:  /{id}/perfil/actualizar
+    defaults: { _controller: "ConfigOrionBundle:usuario:updatePerfil" }
+    requirements: { _method: post|put }
+
+usuario_change_password:
+    pattern:  /{id}/password/cambiar
+    defaults: { _controller: "ConfigOrionBundle:usuario:changePassword" }
+
+usuario_update_password:
+    pattern:  /{id}/password/actualizar
+    defaults: { _controller: "ConfigOrionBundle:usuario:updatePassword" }
+    requirements: { _method: post|put }

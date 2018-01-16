@@ -1,0 +1,12 @@
+reporte:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:reporte:index" }
+    
+reporte_pdf:
+    pattern:  /exportar
+    defaults: { _controller: "ConfigOrionBundle:reporte:exportar" } 
+    
+reporte_filtrar:
+    pattern:  /filtrar
+    defaults: { _controller: "ConfigOrionBundle:reporte:filtrar" }
+    requirements: { _method: post }    

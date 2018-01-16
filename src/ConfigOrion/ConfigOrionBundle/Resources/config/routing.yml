@@ -1,0 +1,72 @@
+## YAML Template.
+usuario_login_redirect:
+    path: /
+    defaults: { _controller: FrameworkBundle:Redirect:redirect, route: usuario_login }
+
+usuario_login:
+    path: /login
+    defaults: { _controller: ConfigOrionBundle:usuario:login }
+
+usuario_login_check:
+    path: /login_check
+
+usuario_logout:
+    path: /logout
+
+config_orion_routing_reconocimiento:
+    resource: "@ConfigOrionBundle/Resources/config/routing/reconocimiento.yml"
+    prefix:   /reconocimiento
+    
+config_orion_routing_instancia:
+    resource: "@ConfigOrionBundle/Resources/config/routing/instancia.yml"
+    prefix:   /instancia
+    
+config_orion_routing_plugin:
+    resource: "@ConfigOrionBundle/Resources/config/routing/plugin.yml"
+    prefix:   /plugin
+    
+config_orion_routing_archivo:
+    resource: "@ConfigOrionBundle/Resources/config/routing/archivo.yml"
+    prefix:   /archivo
+    
+config_orion_routing_modificacion:
+    resource: "@ConfigOrionBundle/Resources/config/routing/modificacion.yml"
+    prefix:   /modificacion
+    
+config_orion_routing_etiqueta:
+    resource: "@ConfigOrionBundle/Resources/config/routing/etiqueta.yml"
+    prefix:   /etiqueta
+    
+config_orion_routing_sistema:
+    resource: "@ConfigOrionBundle/Resources/config/routing/sistema.yml"
+    prefix:   /sistema
+    
+config_orion_routing_usuario:
+    resource: "@ConfigOrionBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuario
+
+config_orion_routing_perfil:
+    resource: "@ConfigOrionBundle/Resources/config/routing/perfil.yml"
+    prefix:   /perfil
+
+config_orion_routing_favorito:
+    resource: "@ConfigOrionBundle/Resources/config/routing/favorito.yml"
+    prefix:   /favorito
+
+config_orion_routing_propiedadPerfil:
+    resource: "@ConfigOrionBundle/Resources/config/routing/propiedadperfil.yml"
+    prefix:   /propiedadperfil
+    
+config_orion_routing_graficos:
+    resource: "@ConfigOrionBundle/Resources/config/routing/graficos.yml"
+    prefix:   /graficos
+    
+config_orion_routing_reportes:
+    resource: "@ConfigOrionBundle/Resources/config/routing/reporte.yml"
+    prefix:   /reporte
+       
+config_orion_routing_cron:
+    resource: "@ConfigOrionBundle/Resources/config/routing/cron.yml"
+    prefix:   /cron
+    
+    

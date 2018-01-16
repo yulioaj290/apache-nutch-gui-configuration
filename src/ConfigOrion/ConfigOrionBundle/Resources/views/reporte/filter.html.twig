@@ -1,0 +1,51 @@
+{% extends 'ConfigOrionBundle:reporte:index.html.twig' %}
+{% block informe %}
+
+<!-- Reporte -->   
+
+<div class="show-content report-modificaciones">
+    <div id="report-main-container">
+        <div id="report-header">
+            <img src="{{ asset('bundles/configorion/images/logo.png') }}" alt="orion_configuración" />
+            <h2>Reporte General de Modificaciones</h2>                
+        </div>
+        <hr id="report-header-line" />                            
+                {% for reporte in reportes %}
+        <div class="report-header-content-file">
+            <span class="report-header-content-file-choice">Instancia:</span> <span> {{ reporte.instancia }}</span>
+            <br/>
+            <span class="report-header-content-file-choice">Archivo:</span> <span> {{ reporte.archivo }}</span>
+            <br/>
+            <span class="report-header-content-file-choice">Ubicación:</span> <span> {{ reporte.ubicacion }}</span>            
+        </div>
+        <br/>
+        <table class="report-table-resume">                               
+            <tr class="report-header-table-resume">
+                <td>Propiedad</td>
+                <td>Valor Anterior</td>
+                <td>Valor Actual</td>
+                <td>Fecha</td>                
+            </tr>
+                    {% for modificacion in reporte.modificaciones %}
+            <tr class="report-table-resume-split">
+                <td>{{ modificacion[0] }}</td>
+                <td>{{ modificacion[1] }}</td>
+                <td>{{ modificacion[2] }}</td>
+                <td>{{ modificacion[3] }}</td>                
+            </tr>
+                    {% endfor %}                                                                                     
+            <tr class="report-footer-table-resume">
+                <td>Total</td>
+                <td>{{ reporte.count }}</td>    
+                <td></td> 
+                <td></td> 
+            </tr>               
+        </table>                    
+        <span class="report-table-caption">Período de Modificaciones:</span> {{ fecha }}
+        <br/>
+        <br/>
+                {% endfor %} 
+    </div>
+</div>     
+
+{% endblock %}

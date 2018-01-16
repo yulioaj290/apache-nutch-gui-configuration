@@ -1,0 +1,62 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Lista de Favoritos
+            <a href="#" class="btn btn-primary active align-right" role="button" data-toggle="modal" data-target="#modalArchivarModificaciones" >
+                <span class="glyphicon glyphicon-briefcase"></span> Archivar modificaciones
+            </a>
+            <a href="{{ path('instancia_new') }}" class="btn btn-success active align-right margin-basic-right" role="button" >
+                <span class="glyphicon glyphicon-plus"></span> Registrar instancia
+            </a>       
+        </h1>
+    </div>
+
+    <div class="panel-body">
+        Administraci&oacute;n de configuraciones favoritas del sistemaslidifansldk
+    </div>
+
+    <div class="panel-default">
+        {% for favorito in favoritos %}
+            <div class="list-object-item-container">
+                <a href="{{ path('favorito_show', { 'id': favorito.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >
+                    <div class="list-object-item-div-first back-favorito"></div>
+                    <div class="list-object-item-div-medium">
+                        <h4 class="list-object-item-heading">
+                            <p><span class="label label-primary">{{ favorito.nombre }}</span></p>                            
+                        </h4>
+                        <p class="list-object-item-text">{{ favorito.descripcion }}</p>
+                    </div>
+                    <div class="list-object-item-div-last">                        
+                        <a href="#" rel="tooltip" data-placement="top" data-original-title="Aplicar favorito" >
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span> Aplicar
+                            </button>
+                        </a>
+                        <a href="{{ path('favorito_show', { 'id': favorito.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                            <button type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </a>
+                        <a href="{{ path('favorito_edit', { 'id': favorito.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                            <button type="button" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                        </a>
+                    </div>
+                    <p class="clearfix"></p>
+                </a>
+            </div>
+       {% endfor %}
+        </div>
+    </div>  
+
+    <div class="show-actions">
+        <a class="btn btn-primary active" role="button" href="{{ path('favorito_new') }}">
+            <span class="glyphicon glyphicon-plus"></span> Crear favorito
+        </a>
+    </div>
+
+{% endblock%}

@@ -1,0 +1,49 @@
+archivo:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:archivo:index" }
+
+archivo_show:
+    pattern:  /{parent}/{id_parent}/{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:archivo:show" }
+
+archivo_new:
+    pattern:  /{parent}/{id_parent}/nuevo
+    defaults: { _controller: "ConfigOrionBundle:archivo:new" }
+
+archivo_create:
+    pattern:  /{parent}/{id_parent}/crear
+    defaults: { _controller: "ConfigOrionBundle:archivo:create" }
+    requirements: { _method: post }
+
+archivo_edit:
+    pattern:  /{parent}/{id_parent}/{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:archivo:edit" }
+
+archivo_update:
+    pattern:  /{parent}/{id_parent}/{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:archivo:update" }
+    requirements: { _method: post|put }
+
+archivo_delete:
+    pattern:  /{parent}/{id_parent}/{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:archivo:delete" }
+    requirements: { _method: post|delete }
+
+archivo_admin:
+    pattern:  /{id}/administrar
+    defaults: { _controller: "ConfigOrionBundle:archivo:admin" }
+
+archivo_delete_property_main_file:
+    pattern:  /{parent}/{id_parent}/{id}/propiedad/{no_property}
+    defaults: { _controller: "ConfigOrionBundle:archivo:deletePropertyMainFile" }
+
+archivo_delete_generic_property:
+    pattern:  /{parent}/{id_parent}/propiedad/{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:archivo:deleteGenericProperty" }
+    requirements: { _method: post|put }
+
+archivo_autocompletado:
+    pattern:  /autocompletar
+    defaults: { _controller: "ConfigOrionBundle:archivo:autocompletar" }
+    requirements: { _method: post }
+    

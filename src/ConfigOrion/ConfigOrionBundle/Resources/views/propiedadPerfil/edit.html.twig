@@ -1,0 +1,68 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">  
+    <li><a href="{{ path('perfil') }}">Perfiles</a></li>    
+    <li><a href="{{ path('perfil_admin', {'id':id_perfil}) }}">Administrar perfil</a></li>
+    <li>Editar propiedad de perfil</li> 
+</ul>
+
+<h1>Editar propiedad de perfil</h1>
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('propiedadperfil_update', {'perfil': id_perfil,'id': document.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <table class="table table-hover">
+            <tr>
+                <th>Propiedad</th>
+                <td>{{ document.propiedad }}</td>
+            </tr>
+            <tr>                
+                <th class="margin-label-center">{{ form_label(edit_form.valor) }}</th>
+                <td>{{ form_errors(edit_form.valor) }}{{ form_widget(edit_form.valor) }}</td>
+            </tr>
+        </table> 
+            {{ form_rest(edit_form) }}
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-success active">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('perfil_admin', { 'id': id_perfil }) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de propiedades
+    </a>
+    <button class="btn btn-danger active" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('propiedadperfil_delete', {'perfil': id_perfil, 'id': document.id }) }}" method="post">
+                        {{ form_widget(delete_form) }}
+                            <button type="submit" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-remove"></span> Si
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+    </div>
+
+
+{% endblock%}

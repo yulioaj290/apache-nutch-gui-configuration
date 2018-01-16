@@ -1,0 +1,37 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Perfil de <i>&quot;{{ document.nombre ~ ' (' ~ document.username ~ ')'}}&quot;</i>
+            <a class="btn btn-success active align-right" role="button" href="{{ path('usuario_change_perfil', { 'id': document.id }) }}">
+                <span class="glyphicon glyphicon-edit"></span> Editar informaci&oacute;n
+            </a>      
+        </h1>
+    </div>
+
+    <div class="show-content">
+        <table class="table table-hover">            <tr>
+                <th><h4><span class="label label-primary">Nombre</span></h4></th>
+            <td>{{ document.nombre }}</td>
+        </tr>            <tr>
+        <th><h4><span class="label label-primary">Usuario</span></h4></th>
+    <td>{{ document.username }}</td>
+</tr>            <tr>
+<th><h4><span class="label label-primary">Email</span></h4></th>
+<td>{{ document.email }}</td>
+</tr>    <tr>
+<th><h4><span class="label label-primary">Rol</span></h4></th>
+<td>
+                {% for rolesField in document.roles %}
+                    {{ rolesField }}
+                {% endfor %}
+</td>
+</tr>            </table>
+
+</div>
+
+</div>
+
+{% endblock%}

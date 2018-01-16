@@ -1,0 +1,51 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Lista de propiedades del sistema
+            {#
+            <span id="chart-exclamation" class="glyphicon glyphicon-exclamation-sign" data-trigger="hover" data-title="Advertencia!!!" data-html="true" data-content="Las propiedades de sistema definidas no deber&aacute;n eliminarse ni cambiarse el nombre, debido a que puede producirse un mal funcionamiento de la aplicaci&oacute;n." data-placement="right" data-toggle="popover" data-container="body" ></span>
+            <a class="btn btn-success active align-right" role="button" href="{{ path('sistema_new') }}">
+                <span class="glyphicon glyphicon-plus"></span> Crear propiedad del sistema
+            </a>      
+            #}
+        </h1>
+    </div>
+
+    <div class="panel panel-default">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Valor</th>
+                    <th>Descripci&oacute;n</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td><a href="{{ path('sistema_show', { 'id': document.id }) }}">{{ document.nombre }}</a></td>
+                    <td>{{ document.valor }}</td>
+                    <td>{{ document.descripcion }}</td>
+                    <td>        
+                        <a href="{{ path('sistema_show', { 'id': document.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" ><span class="glyphicon glyphicon-eye-open"></span></a>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        &nbsp;
+                        <a href="{{ path('sistema_edit', { 'id': document.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" ><span class="glyphicon glyphicon-edit"></span></a>
+                        &nbsp;
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+// Lanzando popover
+    $('#chart-exclamation').popover();
+</script>
+{% endblock%}

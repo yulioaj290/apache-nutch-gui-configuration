@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block flash_bags %}
+<!-- bloque de mensajes FlashBag -->
+{% for flashMessage in app.session.flashbag.get('danger') %}
+<div class="alert alert-danger fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-remove-sign"></span>
+    <strong>Error! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div class="alert alert-warning fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-warning-sign"></span>
+    <strong>Atenci&oacute;n! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-ok-sign"></span>
+    <strong>Enhorabuena! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('info') %}
+<div class="alert alert-info fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    <strong>Informaci&oacute;n! </strong>
+            {{ flashMessage|raw }}
+</div>
+{% endfor %}
+<!-- FIN - bloque de mensajes FlashBag -->
+{% endblock %}
+
+{% block body%}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+graficos:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:graficos:index" }
+
+graficos_spline:
+    pattern:  /spline
+    defaults: { _controller: "ConfigOrionBundle:graficos:spline" }
+
+graficos_filter:
+    pattern:  /filter
+    defaults: { _controller: "ConfigOrionBundle:graficos:filter" }
+    requirements: { _method: post|put }
+

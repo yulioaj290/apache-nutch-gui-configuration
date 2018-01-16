@@ -1,0 +1,16 @@
+sistema:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:sistema:index" }
+
+sistema_show:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:sistema:show" }
+
+sistema_edit:
+    pattern:  /{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:sistema:edit" }
+
+sistema_update:
+    pattern:  /{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:sistema:update" }
+    requirements: { _method: post|put }

@@ -1,0 +1,73 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">  
+    <li><a href="{{ path('perfil') }}">Perfiles</a></li>    
+    <li>Administrar perfil</li>
+</ul>
+
+<div id="accordion-left" class="panel panel-default without-accordion">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Perfil<i>&quot;{{ perfil.nombre }}&quot;</i>
+            <a href="{{ path('perfil')}}" class="btn btn-default align-right" role="button" rel="tooltip" data-placement="top" data-original-title="Subir de nivel" >
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('perfil_edit', { 'id': perfil.id }) }}" class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+            {% endif %}
+            <a href="{{ path('perfil_show', { 'id': perfil.id }) }}" class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+        </h1>
+    </div>
+    <div class="panel-body">
+        {{ perfil.descripcion }}
+    </div>
+
+    <div class="list-object">
+        {% for item in propiedades %}
+        <div id="item-propiedad-{{ item.id }}" class="list-object-item-container">
+            <a href="{{ path('propiedadperfil_show', {'perfil': perfil.id,'id': item.id })}}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >
+                <div class="list-object-item-div-first back-modificacion"></div>
+                <div class="list-object-item-div-medium perfil-property-content">
+                    <h4 class="list-object-item-heading perfil-property">
+                        <p><span class="label label-primary">{{ item.propiedad }}</span>
+                            <span class="label label-default">Valor: </span><span class="label label-success">{{ item.valor }}</span></p>
+                        <p>
+                            <span class="label label-default">Instancia</span>
+                            <span class="label label-warning">{{ attribute(instancia, item.id).nombre }}</span>
+                            <span class="label label-default">Archivo </span><span class="label label-warning">{{ item.archivoId.nombre }}</span>
+                        </p>                            
+                    </h4>
+                </div>
+                <div class="list-object-item-div-last">
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('propiedadperfil_aplicar', {'propiedad': item.id})}}" rel="tooltip" data-placement="top" data-original-title="Aplicar propiedad" >
+                        <button type="button" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span> Aplicar
+                        </button>
+                    </a>
+                    {% endif %}
+                    <a href="{{ path('propiedadperfil_show', {'perfil': perfil.id,'id': item.id })}}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('propiedadperfil_edit', {'perfil': perfil.id, 'id': item.id })}}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+                <p class="clearfix"></p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%} 

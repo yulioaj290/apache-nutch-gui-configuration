@@ -1,0 +1,53 @@
+div.panel-login{
+    width: 597px;
+    height: 412px;
+    margin: 50px auto 0 auto;
+    background-image: url('../images/login-back.png');
+    background-repeat: no-repeat;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    text-align: center !important;
+}
+
+div.panel-login .panel-body{
+    width: 597px;
+    height: 412px;
+}
+
+div.panel-login form.form-login{
+    display: table;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    top: 200px;
+}
+
+div.panel-login .panel-default, div.panel-login .panel-body{
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+.input-group-addon:not(:first-child):not(:last-child), .input-group-btn:not(:first-child):not(:last-child), .input-group .form-control:not(:first-child):not(:last-child){
+    border-radius: 0 6px 6px 0 !Important;
+    width: 315px !important;
+}
+
+.alert .glyphicon{
+    margin-right: 15px;
+}
+
+div.panel-login img {
+    margin: 0 0 0 20px;
+}
+
+.logo-login{
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin-left: 110px !important;
+    border: 1px solid #DDDDDD;
+    padding: 10px;
+    border-radius: 1000px;
+}

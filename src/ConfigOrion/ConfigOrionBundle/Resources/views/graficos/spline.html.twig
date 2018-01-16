@@ -1,0 +1,206 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/daterangepicker-bs3.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/jquery.jqplot.min.css') }}" type="text/css" />
+{% endblock %}
+
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Spline de historial de modificaciones
+            <a class="btn btn-success active align-right" role="button" href="{{ path('graficos') }}">
+                <span class="glyphicon glyphicon-signal"></span> Gr&aacute;ficos generales
+            </a>      
+        </h1>
+
+        {#
+        <div class="margin-basic-top border-basic-top padding-basic-top">
+            <form action="{{ path('graficos_filter_spline') }}" method="POST" class="form-inline" role="form">
+                <div class="form-group margin-basic-right">
+                    {{ form_label(form.fecha) }}
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                        {{ form_widget(form.fecha) }}
+                    </div>
+                    <div class="hidden">
+                    {{ form_rest(form) }}
+                    </div>
+                </div>
+                <div class="form-group form-filter-submit">
+                    <button type="submit" class="btn btn-primary active"><span class="glyphicon glyphicon-filter"></span> Filtrar</button>
+                    <a class="btn btn-danger active" role="button" href="{{ path('graficos_spline') }}"><span class="glyphicon glyphicon-ban-circle"></span> Restablecer</a>
+                </div>
+            </form>
+        </div>
+        #}
+    </div>
+
+    <div class="show-content">
+        <div class="chart-container">
+            <div class="data-chart-spline">
+                <div id="chart1" style="height:380px;"></div> 
+            </div>
+            <div class="data-chart-spline">
+                <span id="chart-help" class="glyphicon glyphicon-question-sign" data-trigger="hover" data-title="Filtro de fecha" data-html="true" data-content="<ul><li>Click y arrastrar para filtrar.</li><li>Doble click para restablecer.</li></ul>" data-placement="top" data-toggle="popover" data-container="body" ></span>
+                <div id="chart2" style="height:130px;">
+                </div> 
+            </div>
+        </div>
+    </div>
+    {#% for item in array_data_mods %}
+    {{ item[0] ~' - '~ item[1] }} <br />
+    {% endfor %#}
+</div>
+{% endblock%}
+
+{% block specific_javascripts %}
+<script src="{{ asset('bundles/configorion/js/moment.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/daterangepicker.js') }}" type="text/javascript"></script>
+
+<!-- Javascript asociado a los graficos de jQPlot -->
+<script src="{{ asset('bundles/configorion/js/jquery.jqplot.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.cursor.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.dateAxisRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasAxisTickRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasAxisLabelRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.canvasTextRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.pointLabels.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.highlighter.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.pieRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.barRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.categoryAxisRenderer.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/plugins/jqplot.trendline.min.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+            $('#chart-help').popover();
+            // Lanzamiento del DateRangePicker
+                $('#configorion_configorionbundle_graficofiltertype_fecha').daterangepicker(
+                {
+                format: 'DD/MM/YYYY',
+                startDate: new Date(),
+            endDate: new Date(),
+                opens: 'right',
+                ranges: {
+                'Hoy': [moment(), moment()],
+                    'Ayer': [moment().subtract('days', 1), moment().subtract('days', 1)],
+                        'Últimos 7 días': [moment().subtract('days', 6), moment()],
+                    'Últimos 30 días': [moment().subtract('days', 29), moment()],
+                        'Este mes': [moment().startOf('month'), moment().endOf('month')],
+                'Mes pasado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+                    }
+            }
+    );
+    /*
+                var InPr = [['2008-09-30', 4], ['2008-10-30', 6.5], ['2008-11-30', 5.7], ['2008-12-30', 9],
+        ['2009-01-30', 8.2], ['2009-02-28', 7.6], ['2009-03-30', 11.4], ['2009-04-30', 16.2],
+                ['2009-05-30', 21.8], ['2009-06-30', 19.3], ['2009-07-30', 29.7], ['2009-08-30', 36.7],
+                ['2009-09-30', 38.7], ['2009-10-30', 33.7], ['2009-11-30', 49.7], ['2009-12-30', 62.7]];
+     */
+
+            var InPr = [
+     {% for item in array_data_mods %}
+        [
+                 "{{ item[0] }}"
+                                 ,
+                {{ item[1] }}
+                            ],
+     {% endfor %}
+                     ];
+                     $(document).ready(function() {
+                     $.jqplot.config.enablePlugins = true;         // InPr, OutPr and ERPM are defined separately.  They are large datasets.
+                         targetPlot = $.jqplot('chart1', [InPr], {
+                         title: 'Historial de modificaciones',
+                             seriesColors: ["#0022FF"],
+            seriesDefaults: {
+                         showMarker: true,
+                         pointLabels: {show: true},
+                             rendererOptions: {
+                             smooth: true,
+                },
+                             },
+                         highlighter: {
+                     show: true,
+                     sizeAdjust: 8,
+                         tooltipOffset: 3,
+                             },
+                         series: [{lineWidth: 4}],
+                     cursor: {
+                 show: true,
+             zoom: true,
+                looseZoom: true,
+             showTooltip: true,
+         followMouse: false,
+            },
+            legend: {
+                location: 'nw',
+                xoffset: 270,
+                yoffset: 100,
+            },
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.DateAxisRenderer,
+                    rendererOptions: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer
+                    },
+                    tickOptions: {
+                        formatString: '%#d/%#m/%Y',
+                        fontSize: '10pt',
+                        angle: -40
+                    }
+                },
+                yaxis: {
+                    tickOptions: {
+                        fontSize: '10pt',
+                        formatString: '%d'},
+                }
+            },
+        });
+        controllerPlot = $.jqplot('chart2', [InPr], {
+            seriesDefaults: {
+                showMarker: true,
+                pointLabels: {show: true},
+                rendererOptions: {
+                    smooth: true,
+                },
+            },
+            highlighter: {
+                show: false,
+            },
+            series: [
+                {label: 'P In'},
+            ],
+            cursor: {
+                show: true,
+                showTooltip: true,
+                zoom: true,
+                constrainZoomTo: 'x'
+            },
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.DateAxisRenderer,
+                    rendererOptions: {
+                        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                    },
+                    tickOptions: {
+                        formatString: '%#d/%#m/%Y',
+                        fontSize: '10pt',
+                        angle: -40
+                    }
+                },
+                yaxis: {
+                    tickOptions: {
+                        fontSize: '10pt',
+                    }
+                }
+            },
+        });
+        $.jqplot.Cursor.zoomProxy(targetPlot, controllerPlot);
+        $.jqplot._noToImageButton = true;
+    });
+</script>
+{% endblock %}

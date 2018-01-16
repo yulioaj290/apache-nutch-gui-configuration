@@ -1,0 +1,67 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+  {% if parent=='plugin' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia_item.id}) }}">{{ instancia_item.nombre }}</a></li>    
+    <li><a href="{{ path('plugin_admin', {'id': plugin.id}) }}">Administrar plugin</a></li>
+  {% elseif parent=='instancia' %}
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>   
+  {% endif %}    
+    <li>Registrar archivo</li>
+</ul>
+
+<h1>Registrar archivo</h1>
+
+<div class="content-hr-both show-content">
+    <form action="
+            {% if parent == 'instancia' %}
+                {{ path('archivo_create',{'parent': parent,'id_parent': instancia.id}) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('archivo_create',{'parent': parent,'id_parent': plugin.id}) }}
+            {% endif %}
+          " method="post" {{ form_enctype(form) }}>
+        <div class="element-float-left margin-basic-right border-basic-right padding-basic-right">
+            {{ form_row(form.nombre) }}
+            {{ form_row(form.ruta) }}
+            {{ form_row(form.descripcion) }}
+        </div>
+        <div class="element-float-left margin-basic-right">    
+            {{ form_row(form.formato) }}
+            <p>Nota: El contenido del archivo es cargado autom&aacute;ticamente.</p>
+        </div>
+        <div class="hidden">
+            {{ form_row(form.contenido) }}
+            {{ form_rest(form) }}
+        </div>
+        <div class="clearfix"></div>
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-success active">
+                <span class="glyphicon glyphicon-ok"></span> Guardar
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="
+            {% if parent == 'instancia' %}
+                {{ path('instancia_admin', {'id': instancia.id}) }}
+            {% elseif parent == 'plugin' %}
+                {{ path('plugin_admin', {'id': plugin.id}) }}
+            {% endif %}
+       ">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de archivos
+    </a>
+
+</div>
+
+
+{% endblock%}
+
+{% block inline_javascripts %}
+<script type="text/javascript">
+    autocompletadoDirRequest('#configorion_configorionbundle_archivotype_ruta', '{{ url('archivo_autocompletado')}}');
+    autocompletadoFileRequest('#configorion_configorionbundle_archivotype_ruta', '#configorion_configorionbundle_archivotype_nombre', '{{ url('archivo_autocompletado')}}');
+</script>
+{% endblock%}

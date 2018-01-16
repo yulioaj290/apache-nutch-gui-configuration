@@ -1,0 +1,64 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Usuario <i>&quot;{{ document.nombre ~ ' (' ~ document.username ~ ')'}}&quot;</i></h1>
+
+<div class="content-hr-both show-content">
+    <table class="table table-hover">            <tr>
+            <th>Nombre</th>
+            <td>{{ document.nombre }}</td>
+        </tr>            <tr>
+            <th>Usuario</th>
+            <td>{{ document.username }}</td>
+        </tr>            <tr>
+            <th>Email</th>
+            <td>{{ document.email }}</td>
+        </tr>    <tr>
+            <th>Rol</th>
+            <td>
+                {% for rolesField in document.roles %}
+                    {{ rolesField }}
+                {% endfor %}
+            </td>
+        </tr>            </table>
+
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('usuario') }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de usuarios
+    </a>
+    <a class="btn btn-success active" role="button" href="{{ path('usuario_edit', { 'id': document.id }) }}">
+        <span class="glyphicon glyphicon-edit"></span> Editar
+    </a>
+    <button class="btn btn-danger active" data-toggle="modal" data-target="#modalDelete">
+        <span class="glyphicon glyphicon-remove"></span> Eliminar
+    </button>
+
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Antenci&oacute;n!!!</h4>
+                </div>
+                <div class="modal-body">
+                    ¿Est&aacute; seguro que desea eliminar este dato?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('usuario_delete', { 'id': document.id }) }}" method="post">
+                        {{ form_widget(delete_form) }}
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Si
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+</div>
+
+{% endblock%}

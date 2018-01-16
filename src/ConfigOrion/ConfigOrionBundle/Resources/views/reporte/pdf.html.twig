@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>CONFIG-ORI&Oacute;N | Sistema para la configuraci&oacute;n del mecanismo de rastreo de Ori&oacute;n 2.0</title>        
+        <!-- styles -->
+        <style type="text/css">   
+
+                #report-main-container {
+                    margin: 0 auto;                    
+                    font-family: Calibri, Arial, sans-serif;                   
+                }
+
+                #report-main-container * {
+                    margin: 0;
+                }
+
+                #report-header {
+                    text-align: center;         
+                }
+
+                #report-header h2 {   
+                    font-style: italic;       
+                }
+
+                #report-header-line {
+                    background-repeat: repeat-x;
+                    background-image: url("http://{{ app.request.server.get('SERVER_NAME') }}{{ asset('bundles/configorion/images/line.png') }}");
+                }
+
+                .report-table-resume {
+                    border-top: 2px solid black;
+                    border-bottom: 2px solid black;
+                    border-spacing: 0;
+                    font-size: 13px;
+                    width: 100%;
+                }
+
+                .report-table-resume td {
+                    padding: 0 15px;                    
+                }
+
+                .report-header-table-resume td {      
+                    border-bottom: 2px solid black;
+                    background-color: rgb(75, 172, 198);    
+                    font-weight: bold;
+                    color: white;    
+                }
+
+                .report-footer-table-resume td {
+                    border-top: 2px double black;   
+                }
+
+                .report-table-caption {
+                    color: #545454;
+                    font-style: italic;
+                    font-size: 12px;
+                    margin-left: 15px !important;
+                }
+
+                .reporte-date {
+                    font-size: 12px;
+                }           
+
+                .report-header-content-file {    
+                    font-style: italic;
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+
+                .report-header-content-file-choice {
+                    text-decoration: underline;
+                }
+
+                .report-table-resume-split td {
+                    border-bottom: 1px solid black;    
+                }
+
+            </style>
+        </head>
+        <body>
+            <div id="report-main-container">
+                <div id="report-header">
+                    <img src="http://{{ app.request.server.get('SERVER_NAME') }}{{ asset('bundles/configorion/images/pdf_logo.png') }}" alt="orion_configuración" />
+                    <h2>Reporte General de Modificaciones</h2>                
+                </div>
+                <div id="report-header-line">&nbsp;</div>  
+                {% for reporte in reportes %}
+                    <div class="report-header-content-file">
+                        <span class="report-header-content-file-choice">Instancia:</span> <span> {{ reporte.instancia }}</span>
+                        <br/>
+                        <span class="report-header-content-file-choice">Archivo:</span> <span> {{ reporte.archivo }}</span>
+                        <br/>
+                        <span class="report-header-content-file-choice">Ubicación:</span> <span> {{ reporte.ubicacion }}</span>            
+                    </div>
+                    <br/>
+                    <table class="report-table-resume">                               
+                        <tr class="report-header-table-resume">
+                            <td>Propiedad</td>
+                            <td>Valor Anterior</td>
+                            <td>Valor Actual</td>
+                            <td>Fecha</td>                
+                        </tr>
+                        {% for modificacion in reporte.modificaciones %}
+                            <tr class="report-table-resume-split">
+                                <td>{{ modificacion[0] }}</td>
+                                <td>{{ modificacion[1] }}</td>
+                                <td>{{ modificacion[2] }}</td>
+                                <td>{{ modificacion[3] }}</td>                
+                            </tr>
+                        {% endfor %}                                                                                     
+                        <tr class="report-footer-table-resume">
+                            <td>Total</td>
+                            <td>{{ reporte.count }}</td>    
+                            <td></td> 
+                            <td></td> 
+                        </tr>               
+                    </table>                    
+                    <span class="report-table-caption">Período de Modificaciones:</span><span class="reporte-date"> {{ fecha }} </span>
+                    <br/>
+                    <br/>
+                {% endfor %} 
+            </div>
+        </body>
+    </html>

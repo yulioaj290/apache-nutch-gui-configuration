@@ -1,0 +1,54 @@
+cron_index:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:cron:index" }
+
+cron_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "ConfigOrionBundle:cron:edit" }
+    
+cron_create:
+    pattern:  /create
+    defaults: { _controller: "ConfigOrionBundle:cron:create" }
+
+cron_add:
+    pattern:  /add
+    defaults: { _controller: "ConfigOrionBundle:cron:add" }
+    requirements: { _method: post }
+    
+cron_wakeup:
+    pattern:  /{id}/wakeup
+    defaults: { _controller: "ConfigOrionBundle:cron:wakeup" }
+    
+cron_suspend:
+    pattern:  /{id}/suspend
+    defaults: { _controller: "ConfigOrionBundle:cron:suspend" }
+    
+cron_remove:
+    pattern:  /{id}/remove
+    defaults: { _controller: "ConfigOrionBundle:cron:remove" }
+
+cron_file:
+    pattern:  /{id}/file/{type}
+    defaults: { _controller: "ConfigOrionBundle:cron:file" }
+    requirements: { type: log|error }
+
+
+cron_admin:
+    pattern:  /instancia/{id}
+    defaults: { _controller: "ConfigOrionBundle:cron:admin" }
+
+cron_create_instance:
+    pattern:  /create/instancia/{id}
+    defaults: { _controller: "ConfigOrionBundle:cron:createOfInstance" }
+
+cron_wakeup_instance:
+    pattern:  /{id}/wakeup/instancia/{id_instancia}
+    defaults: { _controller: "ConfigOrionBundle:cron:wakeup" }
+
+cron_suspend_instance:
+    pattern:  /{id}/suspend/instancia/{id_instancia}
+    defaults: { _controller: "ConfigOrionBundle:cron:suspend" }
+
+cron_remove_instance:
+    pattern:  /{id}/remove/instancia/{id_instancia}
+    defaults: { _controller: "ConfigOrionBundle:cron:remove" }

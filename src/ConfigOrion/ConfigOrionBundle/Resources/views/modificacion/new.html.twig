@@ -1,0 +1,37 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Crear modificaci&oacute;n</h1>
+
+
+<div class="content-hr-both show-content">
+    <form action="{{ path('modificacion_create', {'id_archivo': archivo.id}) }}" method="post" {{ form_enctype(form) }}>
+        <div class="element-float-left margin-basic-right border-basic-right padding-basic-right">
+            {{ form_row(form.fecha) }}
+            {{ form_row(form.propiedad) }}
+            {{ form_row(form.rutaPropiedad) }}
+            {{ form_row(form.valorAnterior) }}
+        </div>
+        <div class="element-float-left">
+            {{ form_row(form.valorActual) }}
+            {{ form_row(form.descripcion) }}
+        </div>
+        <div class="hidden">{{ form_rest(form) }}</div>
+        <div class="clearfix"></div>
+        <p class="actions-forms">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Crear
+            </button>
+        </p>
+    </form>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-default active" role="button" href="{{ path('archivo_admin', {'id': archivo.id}) }}">
+        <span class="glyphicon glyphicon-th-list"></span> Lista de modificaciones
+    </a>
+        
+</div>
+
+
+{% endblock%}

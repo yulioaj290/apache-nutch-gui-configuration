@@ -15,6 +15,10 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
+# Vendors
+/vendor/*
+/src/Spraed/*
+
 # Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
@@ -39,3 +43,26 @@
 
 # Backup entities generated with doctrine:generate:entities command
 **/Entity/*~
+
+# phpstorm
+.idea/
+ 
+# sublimetext
+/*.sublime-project
+*.sublime-workspace
+ 
+# netbeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+ 
+# -- Sistemas Operativos ------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

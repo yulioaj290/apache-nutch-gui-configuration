@@ -1,0 +1,960 @@
+back-modificacionbody{
+    background-color: #ffffff;
+}
+
+div.body-general-aplication{
+    padding: 0px 10px !Important;
+    clear: both;
+    margin-bottom: 0px;
+    min-height: 480px;
+}
+
+.show-content table th {
+    text-align: right;
+    width: 50px;
+}
+
+.show-content form label{
+    display: block !important;
+}
+
+.chart-container{
+    margin: 10px auto;
+    width: 850px;
+}
+
+.chart-container div.data-chart{
+    margin: 0 auto;
+}
+
+.chart-container #chart-help{
+    position: relative;
+    left: -30px;
+    font-size: 24px;
+    color: #0066cc;
+    cursor: pointer;
+}
+
+#chart-exclamation{
+    font-size: 24px;
+    color: #ff9900;
+    cursor: pointer;
+}
+
+#form_perfiles label, #favorito_instance label {
+    margin-right: 5px;
+}
+
+#form_perfiles_id_perfil, #favorito_instance_id_instancia {
+    display: inline !important;   
+    width: 200px !important;    
+    margin-left: 8px;
+    margin-bottom: auto !important;
+}
+
+#form_perfiles, #favorito_instance {
+    margin-top: 12px;
+}
+
+.show-content form input, .show-content form textarea, .show-content form select,
+#form_perfiles_id_perfil, #favorito_instance_id_instancia  {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    margin-bottom: 15px;
+    width: 300px;
+}
+
+.show-content form input:focus, .show-content form textarea:focus, .show-content form select:focus{
+    border-color: #66AFE9;
+    background-color: #ffffff;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none;
+}
+
+.show-content form textarea{
+    min-height: 100px !important;
+}
+
+.show-content form input.input-xml-atributos {
+    height: 20px;
+    min-width: 50px;
+    display: inline !important;
+    margin: 0px 2px;
+    padding: 2px 4px;
+    font-size: 12px;
+}
+
+.show-content form input.input-xml-text, .show-content .form-xml-generic form textarea.input-xml-text{
+    margin: 3px 0px 0px !important;
+    width: 450px;
+}
+
+.form-xml-generic div.xml-indent{
+    margin: 2px 5px 2px 2px;
+    border: 1px #0000FF solid !important;
+    border-radius: 4px;
+    display: table;
+    width: 99.7%;
+}
+
+.form-xml-generic div.xml-indent div.xml-indent-head{
+    margin: 0px 5px 0px 0px;
+    border: none;
+    border-radius: 2px 0 0 2px;
+    padding: 3px;
+    background-color: #CCCCCC;
+    display: table-cell;
+    width: 25px;
+}
+
+.form-xml-generic div.xml-indent div.xml-indent-content{
+    display: table-cell;
+    padding-left: 5px;
+}
+
+.form-xml-generic div.xml-indent div.xml-indent-head a{
+    color: #000000;
+    text-decoration: none;
+}
+
+.form-xml-generic div.xml-indent div.xml-indent-head a:hover{
+    color: #FFFFFF;
+}
+
+.form-xml-generic div.xml-indent div.xml-indent-head:hover{
+    background-color: #999999;
+}
+
+.form-xml-generic div.no-border{
+    border: none;
+}
+
+.form-xml-generic div .token-blue{
+    color: #0000FF;
+}
+
+.form-xml-generic div .token-green{
+    color: #009900;
+}
+
+.form-filter-cantidad{
+    width: 150px !important;
+    margin-bottom: 0px !important;
+}
+
+.form-filter-archivo{
+    width: 200px !important;
+    margin-bottom: 0px !important;
+}
+
+.form-filter-fecha{
+    width: 220px !important;
+    margin-bottom: 0px !important;
+}
+
+.form-filter-submit{
+    float: right;
+    padding-top: 25px;
+    text-align: right;
+}
+
+
+.form-control-except {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 0 4px 4px 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control-except:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+p.actions-forms{
+    margin-top: 10px;
+}
+
+div.show-actions {
+    margin: 10px 0;
+    clear: both !important;
+}
+
+div.show-actions form{
+    display: inline !important;
+}
+
+div.show-actions > *{
+    float: left;
+    margin: 0 5px;
+}
+
+div.content-hr-both {
+    padding-top: 10px;
+    border-top: 3px solid #666666;
+    border-bottom: 3px solid #666666;
+}
+
+div.footer{ 
+    margin-top: 10px !important;
+    border-top: 1px solid #DDDDDD !important;
+    padding-top: 10px;
+    text-align: center;
+    clear: both;
+    font-size: 10px;
+}
+
+.navbar-brand img{
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    width: 40px;
+}
+
+.navbar-brand {
+    width: auto;
+}
+
+.perfil-property {
+    height: 70px !important;    
+}
+
+.perfil-property-content, .plugin-item-content {
+    width: 60% !important;
+}
+
+nav.navbar {
+    padding-right: 15px;
+    padding-left: 45px;
+}
+
+/*  Caja de instancia    */
+.box-instancia{
+    height: 250px;
+    width: 200px;
+    background-image: url('../images/Nutch.png'), -o-linear-gradient(#FFFFFF, #DDDDDD);
+    background-image: url('../images/Nutch.png'), -moz-linear-gradient(#FFFFFF, #DDDDDD);
+    background-image: url('../images/Nutch.png'), -webkit-linear-gradient(#FFFFFF, #DDDDDD);
+    background-size: 80%, 100%;
+    background-repeat: no-repeat;
+    background-position: 15px 20px, left top;
+    margin: 10px;
+    border: 2px solid #DDDDDD;
+    border-radius: 6px;
+    float: left;
+}
+
+.box-instancia:hover{
+    background-color: #FFFFFF;
+    box-shadow: 0 0 25px #DFDFDF;
+    border-color: #DDDDDD;
+    cursor: pointer;
+}
+
+.box-instancia:hover .box-instancia-header{
+    visibility: visible;
+}
+
+.box-instancia:hover .box-instancia-footer{
+    visibility: visible;
+}
+
+.box-instancia-header a {
+    text-decoration: none;
+    color: #333333;
+}
+
+.box-instancia-header a:hover {
+    color: #0088e0;
+}
+
+.box-instancia-header{
+    margin: 0;
+    height: 15%;
+    visibility: hidden;
+    background-color: #DDDDDD;
+    border-radius: 4px 4px 0 0;
+}
+
+.box-instancia-header .glyphicon{
+    margin: 8px 12px;
+    font-size: 20px;
+}
+
+p.box-instancia-content{
+    height: 45%;
+    padding: 80px 10px 10px 10px;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.box-instancia-footer{
+    height: 37%;
+    padding: 10px;
+    background-color: #DDDDDD;
+    overflow: hidden;
+    overflow-y: no-display;
+    text-overflow: ellipsis;
+    border-radius: 0 0 4px 4px;
+    font-size: 10px;
+    visibility: hidden;
+}
+.box-instancia-footer p{
+    overflow: hidden;
+    overflow-y: no-display;
+    text-overflow: ellipsis;
+    height: 99%;
+}
+
+/*  END Caja de instancia   */
+
+/*  Paneles Admin    */
+.align-left{
+    position: relative;
+    left: 0px;
+}
+
+.align-right{
+    float: right;
+}
+
+.align-text-center{
+    text-align: center;
+}
+
+.element-float-left{
+    float: left;
+}
+
+.element-float-right{
+    float: right;
+}
+
+.panel-heading h1, .panel-heading h2, .panel-heading h3, .panel-heading h4, .panel-heading h5, .panel-heading h6{
+    margin: 0 !important;
+}
+
+.panel a.glyphicon {
+    text-decoration: none;
+    margin: 0 3px;
+    color: #000;
+}
+
+.panel a.glyphicon:hover {
+    text-decoration: none;
+    color: #0088e0;
+}
+/*  END Paneles Admin    */
+
+/*  Listas de elementos dentro de tabs    */
+
+.list-object {
+    padding: 0;
+}
+
+.list-object:first-child{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.list-object:last-child{
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px
+}
+
+.list-object-item-container{
+    border-bottom: 1px solid #DDDDDD;
+    padding: 10px 15px 0 15px;
+}
+
+.list-object-item-container .glyphicon{
+    font-size: 16px;
+}
+
+.list-object-item-container:hover{
+    background-color: #3276B1;
+    color: #FFFFFF;
+}
+
+.list-object-item-container:hover a{
+    color: #FFFFFF;
+}
+
+.list-object-item-container:hover a:hover{
+    color: #e0f5ff;
+}
+
+.list-object-item-container.item-select{
+    background-color: #3276B1;
+}
+
+.list-object-item-container.item-select a {
+    color: #FFFFFF;
+}
+
+.list-object-item {
+}
+
+.list-object-item div{
+    float: left;
+}
+
+.list-object-item-div-first{
+    width: 65px;
+    height: 65px;
+}
+
+.list-object-item-container.container-danger:hover{
+    background-color: #a90202 !important;
+    color: #FFFFFF;
+}
+
+.back-plugin{
+    background-image: url('../images/Plugin.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-favorito{
+    background-image: url('../images/Favorito.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-perfil{
+    background-image: url('../images/Perfil.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-archivo{
+    background-image: url('../images/Settings-file.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-modificacion{
+    background-image: url('../images/Edit-file.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.back-tag{
+    background-image: url('../images/Tag.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.list-object-item-div-medium{
+    width: 68%;
+    height: 70px;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    margin: 0 20px;
+}
+
+.accordion-left.show .list-object-item-div-medium{
+    width: 56%;
+}
+
+#plugins .list-object-item-heading{
+    width: 100%;
+}
+
+#plugins .list-object-item-heading span{
+    padding: 4px 8px 3px 8px;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+#archivos .list-object-item-heading{
+    width: 100%;
+}
+
+#archivos .list-object-item-heading span{
+    padding: 4px 8px 3px 8px;
+    margin-right: 15px;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+#archivos .list-object-item-heading span.label-primary{
+    max-width: 88%;
+}
+
+.accordion-left.show #archivos .list-object-item-heading span.label-primary{
+    max-width: 76%;
+}
+
+.list-object-item-div-last {
+    float: right !important;
+    vertical-align: middle !important;
+}
+
+.list-object-item-div-last a{
+    margin: 10px 5px 0 0 !important;
+    text-decoration: none !important;
+}
+
+.list-object-item p.clearfix{
+    height: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.panel{
+    margin-bottom: 5px !important;
+}
+
+/*  END Listas de elementos dentro de tabs    */
+
+/*  Acordeon block    */
+
+.collapse {
+    height: auto;
+    width: auto;
+}
+
+.collapse.height {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height 0.35s ease;
+    -moz-transition: height 0.35s ease;
+    -o-transition: height 0.35s ease;
+    transition: height 0.35s ease;
+}
+
+.collapse.width {
+    position: relative;
+    width: 0;
+    overflow: hidden;
+    -webkit-transition: width 10s ease-out;
+    -moz-transition: width 10s ease-out;
+    -o-transition: width 10s ease-out;
+    transition: width 10s ease-out;
+}
+
+.collapse.in.width {
+    width: auto;
+}
+
+.collapse.in.height {
+    height: auto;
+}
+
+.modificacion-max-height{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+/*  Header specification    */
+.panel.float-left{
+    float: left;
+    width: 100%;
+}
+/*  END    */
+
+.accordion-left{
+    float: none;
+    width: 100%;
+}
+.accordion-right{
+    float: none;
+    width: 0%;
+    visibility: hidden;
+    display: none;
+}
+.accordion-left.show{
+    margin-right: 10px;
+    float: left;
+    width: 73%;
+}
+.accordion-right.show{
+    float: left;
+    width: 26%;
+    visibility: visible;
+    display: inherit;
+}
+.accordion-left .list-object{
+    max-height: 330px;
+    overflow-y: scroll;
+}
+
+.accordion-left .list-object-item-heading{
+    color: #FFFFFF;
+    height: 50px;
+    margin: 0 0 0 0;
+    border-radius: 2px;
+    width: 100%;
+    overflow-x: hidden;
+    padding-top: 2px;
+    text-overflow: ellipsis;
+}
+
+.accordion-left .list-object-item-heading > p{
+    margin: 0px;
+}
+
+.accordion-right .panel-body{
+    max-height: 427px;
+    overflow-y: scroll;
+    padding: 0px;
+}
+
+.accordion-right .panel-body{
+    border-radius: 0 0 4px 4px;
+}
+
+.accordion-right .list-object a{
+    text-decoration: none;
+}
+
+.accordion-right .list-object hr{
+    margin: 0px 0 4px 0;
+    border-color: #555555;
+}
+
+.accordion-right .list-object-item-heading{
+    color: #FFFFFF;
+    height: 30px;
+    margin: 0 0 0 0;
+    border-radius: 2px;
+    width: 100%;
+    overflow-x: hidden;
+    padding-top: 2px;
+    text-overflow: ellipsis;
+}
+
+.accordion-right .list-object-item-body {
+    margin-top: 2px;
+}
+
+.accordion-right .list-object-item-body a{
+    float: right;
+    margin-left: 3px; 
+}
+
+.accordion-right .list-object-item-container {
+    padding-bottom: 7px;
+}
+
+.accordion-right .list-object-item-container:hover hr{
+    border-color: #FFFFFF;
+}
+
+.accordion-right .popover{
+    max-width: 600px;
+    overflow: hidden;
+}
+
+.accordion-right .popover-title{
+    background-color: #428BCA;
+    color: #FFFFFF;
+}
+
+.accordion-right .popover-content div{
+    margin-bottom: 5px;
+}
+
+.accordion-right .popover .label-default{
+    max-width: 75%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.without-accordion .list-object{
+    max-height: 330px;
+    overflow-y: scroll;
+}
+
+.without-accordion .list-object-item-heading{
+    color: #FFFFFF;
+    height: 50px;
+    margin: 0 0 0 0;
+    border-radius: 2px;
+    width: 100%;
+    overflow-x: hidden;
+    padding-top: 2px;
+    text-overflow: ellipsis;
+}
+
+.without-accordion .list-object-item-heading > p{
+    margin: 0px;
+}
+
+.without-accordion .list-object-item-div-medium{
+    width: 70%;
+}
+
+.without-accordion .list-object-item-heading{
+    color: #FFFFFF;
+    height: 50px;
+    margin: 0 0 0 0;
+    border-radius: 2px;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 2px;
+    text-overflow: ellipsis;
+}
+
+.without-accordion .list-object-item-heading > p{
+    margin: 0px;
+}
+
+.without-accordion  .list-object-item-heading span{
+    padding: 4px 8px 3px 8px;
+    margin-right: 15px;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.without-accordion  .list-object-item-heading span.label-success, 
+.without-accordion  .list-object-item-heading span.label-danger{
+    max-width: 30%;
+}
+
+.without-accordion  .list-object-item-heading span.label-default{
+    margin-right: 5px;
+}
+
+body {
+}
+
+/*  END Acordeon block    */
+
+/*  Perfil usuario    */
+
+.table-hover h4{
+    margin: 0px;
+}
+
+/*  END - Perfil usuario    */
+
+/*  Margenes basicos    */
+
+.margin-basic-top{
+    margin-top: 10px;
+}
+
+.margin-basic-right{
+    margin-right: 10px;
+}
+
+.margin-basic-bottom{
+    margin-bottom: 10px;
+}
+
+.margin-basic-left{
+    margin-left: 10px;
+}
+
+.margin-basic-horizontal{
+    margin: 0px 10px;
+}
+
+.margin-basic-vertical{
+    margin: 10px 0px;
+}
+
+.margin-basic-general{
+    margin: 10px;
+}
+
+/*  END - Margenes basicos    */
+
+/*  Borders basicos    */
+
+.border-basic-top{
+    border-top: 1px solid #DDDDDD;
+}
+
+.border-basic-right{
+    border-right: 1px solid #DDDDDD;
+}
+
+.border-basic-bottom{
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.border-basic-left{
+    border-left: 1px solid #DDDDDD;
+}
+
+.border-basic-horizontal{
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+}
+
+.border-basic-vertical{
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.border-basic-general{
+    border: 1px solid #DDDDDD;
+}
+
+/*  END - Borders basicos    */
+
+/*  Paddings basicos    */
+
+.padding-basic-top{
+    padding-top: 10px;
+}
+
+.padding-basic-right{
+    padding-right: 10px;
+}
+
+.padding-basic-bottom{
+    padding-bottom: 10px;
+}
+
+.padding-basic-left{
+    padding-left: 10px;
+}
+
+.padding-basic-horizontal{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.contenido-favorito {
+    height: 200px !important;
+    overflow-y: scroll;
+}
+
+.padding-basic-vertical{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.padding-basic-general{
+    padding: 10px;
+}
+
+/*  END - Paddings basicos    */
+
+/*  Otros bases    */
+
+.clearboth{
+    clear: both;
+}
+
+/*  END - Otros bases    */
+
+
+/*  Forms    */
+div.only-textarea textarea{
+    width: 100% !important;
+    height: 190px !important;
+}
+div.only-textarea input.input-large{
+    width: 100% !important;
+}
+
+/*  END - Forms    */
+
+/*  Panel de tags    */
+
+.panel-tags{
+    background-color: #F5F5F5;
+    border-color: #DDDDDD;
+    vertical-align: middle;
+    border-radius: 4px;
+    display: inline;
+    margin: 0 0 0 35px;
+}
+
+.panel-tags span.glyphicon{
+    display: inline;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.panel-tags .input-same-back{
+    display: inline;
+    background-color: #F5F5F5;
+    border: 0px;
+    box-shadow: 0 0px 0px #F5F5F5;
+    width: 380px;
+    height: 28px;
+    font-size: 12px;
+    margin: 0px;
+    padding: 7px 12px 5px; 
+    position: relative;
+    top: -3px;
+}
+
+.panel-tags .input-same-back:focus{
+    display: inline;
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.panel-edit-content .panel-heading{
+    padding-bottom: 2px !important;
+}
+
+.btn_favorito_upload {
+    position: absolute !important;
+    top: 46px;
+    left: 270px;
+}
+
+#favorito_import_file {
+    display: none;   
+}
+
+.reporte-form-submit {
+    vertical-align: bottom !important;        
+}
+
+.margin-label-center label {
+    margin-top: 6px;
+}
+
+/*  END - Panel de tags    */
+
+/*  BCCCronManagerBundle    */
+
+.row.adjust, .adjust{
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}
+
+/*  END - BCCCronManagerBundle    */

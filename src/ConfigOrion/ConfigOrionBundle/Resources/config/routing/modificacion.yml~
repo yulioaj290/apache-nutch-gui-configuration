@@ -1,0 +1,40 @@
+modificacion:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:modificacion:index" }
+
+modificacion_show:
+    pattern:  /archivo/{id_archivo}/{id}/show
+    defaults: { _controller: "ConfigOrionBundle:modificacion:show" }
+
+modificacion_new:
+    pattern:  /archivo/{id_archivo}/new
+    defaults: { _controller: "ConfigOrionBundle:modificacion:new" }
+
+modificacion_create:
+    pattern:  /archivo/{id_archivo}/create
+    defaults: { _controller: "ConfigOrionBundle:modificacion:create" }
+    requirements: { _method: post }
+
+modificacion_edit:
+    pattern:  /archivo/{id_archivo}/{id}/edit
+    defaults: { _controller: "ConfigOrionBundle:modificacion:edit" }
+
+modificacion_update:
+    pattern:  /archivo/{id_archivo}/{id}/update
+    defaults: { _controller: "ConfigOrionBundle:modificacion:update" }
+    requirements: { _method: post|put }
+
+modificacion_delete:
+    pattern:  /archivo/{id_archivo}/{id}/delete
+    defaults: { _controller: "ConfigOrionBundle:modificacion:delete" }
+    requirements: { _method: post|delete }
+    
+modificacion_archivar:
+    pattern:  /modificacion/archivar
+    defaults: { _controller: "ConfigOrionBundle:modificacion:archivar" }
+    requirements: { _method: post|put }
+    
+modificacion_archivar_por_archivo:
+    pattern:  /archivo/{id_archivo}/archivar
+    defaults: { _controller: "ConfigOrionBundle:modificacion:archivar" }
+    requirements: { _method: post|put }

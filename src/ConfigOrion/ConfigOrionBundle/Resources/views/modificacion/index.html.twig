@@ -1,0 +1,50 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Lista de modificaciones</h1>
+
+<div class="content-hr-both">
+    <div class="panel panel-default">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Propiedad</th>
+                    <th>Ruta de Propiedad</th>
+                    <th>Valor Anterior</th>
+                    <th>Valor Actual</th>
+                    <th>Tipo de Modificaci&oacute;n</th>
+                    <th>Descripci&oacute;n</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td><a href="{{ path('modificacion_show', { 'id': document.id }) }}">{% if document.fecha %}{{ document.fecha|date('d/m/Y') }}{% endif %}</a></td>
+                    <td>{{ document.propiedad }}</td>
+                    <td>{{ document.rutaPropiedad }}</td>
+                    <td>{{ document.valorAnterior }}</td>
+                    <td>{{ document.valorActual }}</td>
+                    <td>{{ document.tipoModificacion }}</td>
+                    <td>{{ document.descripcion }}</td>
+                    <td>        <a href="{{ path('modificacion_show', { 'id': document.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+    &nbsp;
+                        <a href="{{ path('modificacion_edit', { 'id': document.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+    &nbsp;
+        
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-primary active" role="button" href="{{ path('modificacion_new') }}">
+        <span class="glyphicon glyphicon-plus"></span> Crear modificaci&oacute;n
+    </a>
+</div>
+
+{% endblock%}

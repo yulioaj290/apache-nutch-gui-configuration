@@ -1,0 +1,46 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<h1>Lista de propiedadPerfil</h1>
+
+<div class="content-hr-both">
+    <div class="panel panel-default">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Propiedad</th>
+                    <th>Rutapropiedad</th>
+                    <th>Valor</th>
+                    <th>Archivoid</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for document in documents %}
+                <tr>
+                    <td><a href="{{ path('propiedadperfil_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+                    <td>{{ document.propiedad }}</td>
+                    <td>{{ document.rutaPropiedad }}</td>
+                    <td>{{ document.valor }}</td>
+                    <td>{{ document.archivoId }}</td>
+                    <td>        <a href="{{ path('propiedadperfil_show', { 'id': document.id }) }}"><span class="glyphicon glyphicon-eye-open"></span></a>
+    &nbsp;
+                        <a href="{{ path('propiedadperfil_edit', { 'id': document.id }) }}"><span class="glyphicon glyphicon-edit"></span></a>
+    &nbsp;
+        
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="show-actions">
+    <a class="btn btn-primary active" role="button" href="{{ path('propiedadperfil_new') }}">
+        <span class="glyphicon glyphicon-plus"></span> Crear propiedadPerfil
+    </a>
+</div>
+
+{% endblock%}

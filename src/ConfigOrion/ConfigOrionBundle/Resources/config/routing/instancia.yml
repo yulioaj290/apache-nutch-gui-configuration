@@ -1,0 +1,34 @@
+instancia:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:instancia:index" }
+
+instancia_show:
+    pattern:  /{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:instancia:show" }
+
+instancia_new:
+    pattern:  /nuevo
+    defaults: { _controller: "ConfigOrionBundle:instancia:new" }
+
+instancia_create:
+    pattern:  /crear
+    defaults: { _controller: "ConfigOrionBundle:instancia:create" }
+    requirements: { _method: post }
+
+instancia_edit:
+    pattern:  /{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:instancia:edit" }
+
+instancia_update:
+    pattern:  /{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:instancia:update" }
+    requirements: { _method: post|put }
+
+instancia_delete:
+    pattern:  /{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:instancia:delete" }
+    requirements: { _method: post|delete }
+
+instancia_admin:
+    pattern:  /{id}/administrar
+    defaults: { _controller: "ConfigOrionBundle:instancia:admin" }

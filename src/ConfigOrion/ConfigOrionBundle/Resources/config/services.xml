@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    
+ 
+    <services>
+        <service id="config-orion.twig.extension" class="ConfigOrion\ConfigOrionBundle\Twig\TwigExtension" public="false">
+            <tag name="twig.extension"/>
+            <argument>%kernel.logs_dir%</argument>
+            <argument>%kernel.root_dir%</argument>
+        </service>
+    </services>
+  
+    <!--
+    <parameter key="my.session_idle.options" type="collection">
+        <parameter key="idleTime">30</parameter>
+        <parameter key="redirectRoute">home</parameter>
+    </parameter>
+
+    <parameter key="my.handler.session_idle.class">ConfigOrion\ConfigOrionBundle\ExternalClases\SessionIdleHandler</parameter>
+
+    <service id="my.handler.session_idle" class="%my.handler.session_idle.class%">
+        <argument type="service" id="router" />
+        <argument type="service" id="security.context" />
+        <argument>%my.session_idle.options%</argument>
+        <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+    </service>
+
+
+    <parameters>
+        <parameter key="config_orion.example.class">ConfigOrion\ConfigOrionBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="configorion.twig.modificacion_form_extension" class="configOrion\ConfigOrionBundle\Twig\modificacionFormExtension">
+            <tag name="twig.extension" />
+        </service>
+    </services>
+    -->
+</container>

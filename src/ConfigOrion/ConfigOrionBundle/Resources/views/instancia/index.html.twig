@@ -1,0 +1,97 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+
+{% block specific_stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/configorion/css/daterangepicker-bs3.css') }}" type="text/css" />
+{% endblock %}
+{% block body%}
+
+<div class="panel panel-default accordion-left" >
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Instancias registradas
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="#" class="btn btn-primary active align-right" role="button" data-toggle="modal" data-target="#modalArchivarModificaciones" >
+                <span class="glyphicon glyphicon-briefcase"></span> Archivar modificaciones
+            </a>
+            <a href="{{ path('instancia_new') }}" class="btn btn-success active align-right margin-basic-right" role="button" >
+                <span class="glyphicon glyphicon-plus"></span> Registrar instancia
+            </a>
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="panel-body">
+    {% for document in documents %}
+
+        <div class="box-instancia">
+            <div class="box-instancia-header">
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('cron_admin', { 'id': document.id }) }}" rel="tooltip" data-placement="top" data-original-title="{{ 'Cron tasks' |trans({}, 'ConfigOrionBundle') }}" ><span class="glyphicon glyphicon-align-left"></span></a>
+                <a href="{{ path('archivo_new', {'id_parent': document.id, 'parent': 'instancia' }) }}" rel="tooltip" data-placement="top" data-original-title="Registrar Archivo" ><span class="glyphicon glyphicon-file"></span></a>
+                {% endif %}
+                <a href="{{ path('instancia_show', { 'id': document.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" ><span class="glyphicon glyphicon-eye-open"></span></a>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('instancia_edit', { 'id': document.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" ><span class="glyphicon glyphicon-edit"></span></a>
+                {% endif %}
+            </div>
+            <p class="box-instancia-content">
+                <a href="{{ path('instancia_admin', { 'id': document.id }) }}" class="btn btn-primary btn-sm active" role="button" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >{{ document.nombre }}</a>
+            </p>
+            <div class="box-instancia-footer">
+                <p>{{ document.descripcion }}</p>
+            </div>
+        </div>
+
+    {% endfor %}
+
+    </div>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+<div class="modal fade" id="modalArchivarModificaciones" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Archivar modificaciones anteriores a una fecha</h4>
+            </div>
+            <div class="modal-body">                                
+                <form id="formArchivarModificaciones" action="{{ path('modificacion_archivar') }}" method="post">      
+                    <strong>Fecha de antiguedad</strong>
+                    <div class="input-group">
+                        <span class="input-group-addon glyphicon glyphicon-calendar"></span>
+                        {{ form_widget(formArchivar.dateModificacion) }}
+                        {{ form_rest(formArchivar) }}
+                    </div>                               
+                </form>                                       
+            </div>   
+            <div class="modal-footer">
+                <button type="button" onclick="archivarModificaciones()" class="btn btn-success">
+                    <span class="glyphicon glyphicon-briefcase"></span> Archivar
+                </button>                                           
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endif %}
+
+{% endblock%}
+{% block specific_javascripts %}
+<script src="{{ asset('bundles/configorion/js/moment.js') }}" type="text/javascript"></script>
+<script src="{{ asset('bundles/configorion/js/daterangepicker.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block inline_javascripts %}
+    {% if is_granted('ROLE_ADMIN') %}
+<script type="text/javascript">
+    $('#configorion_configorionbundle_archivarmodificaciontype_dateModificacion').daterangepicker(
+            {
+                format: 'DD/MM/YYYY',
+                startDate: new Date(),
+                endDate: new Date(),
+                singleDatePicker: true,
+            }
+    );
+</script>
+    {% endif %}
+{% endblock %}

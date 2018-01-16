@@ -1,0 +1,14 @@
+reconocimiento:
+    path: /
+    defaults: { _controller: ConfigOrionBundle:reconocimiento:reconocimiento }
+    
+reconocimiento_sistema:
+    path: /conservar/{id}
+    defaults: { _controller: ConfigOrionBundle:reconocimiento:conservarSistema }
+        
+reconocimiento_real:
+    path: /cargar/{id}
+    defaults: { _controller: ConfigOrionBundle:reconocimiento:conservarReal }
+    
+
+     

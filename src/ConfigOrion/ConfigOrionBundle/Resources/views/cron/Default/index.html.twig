@@ -1,0 +1,194 @@
+{% extends 'ConfigOrionBundle:cron:layout.html.twig' %}
+
+{% block content %}
+    <div class="panel panel-default accordion-left">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h1>{% if (instancia is defined) %}
+                    {{ 'Cron tasks of instance %name%' | trans({'%name%': instancia.nombre}, 'ConfigOrionBundle') }}
+                {% else %}
+                    {{ 'Cron tasks' | trans({}, 'ConfigOrionBundle') }}
+                {% endif %}
+                <a href="
+                {% if (instancia is defined) %}
+                    {{ path('cron_create_instance' , {'id' : instancia.id}) }}
+                {% else %}
+                    {{ path('cron_create') }}
+                {% endif %}
+                " class="btn btn-success active pull-right" role="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    {{ 'Add a cron' | trans({}, 'ConfigOrionBundle') }}
+                </a>
+            </h1>
+        </div>
+        <div class="panel-body">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default accordion-left">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#cron-list">
+                                <span class="glyphicon glyphicon-list"></span> {{ 'Cron list' | trans({}, 'ConfigOrionBundle') }}
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="cron-list" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="list-object">
+                                {% for index, cron in crons %}
+                                    <div class="row adjust">
+                                        <div class="span2">
+                                            <span class="label label-{% if cron.status == 'error' %}important{% elseif cron.status == 'unknown' %}warning{% else %}success{% endif %}">
+                                                {{ cron.status | trans({}, 'ConfigOrionBundle') }}
+                                            </span>
+                                        </div>
+                                        <h3 class="span{% if cron.suspended %} muted{% endif %}">
+                                            {{ cron.expression }} {{ cron.command }}
+                                            <div class="pull-right">
+                                                {% if is_granted('ROLE_ADMIN') %}
+                                                    <a class="btn btn-default btn-primary"
+                                                       href="{{ path('cron_edit', {'id':index}) }}"
+                                                       data-original-title="{{ 'Edit' | trans({}, 'ConfigOrionBundle') }}"
+                                                       data-placement="top" rel="tooltip">
+                                                        <span class="glyphicon glyphicon-edit"></span>
+                                                    </a>
+                                                    {% if (instancia is defined) %}
+                                                        {% if cron.suspended %}
+                                                            <a class="btn btn-default btn-success"
+                                                               href="{{ path('cron_wakeup_instance', {'id':index, 'id_instancia':instancia.id}) }}"
+                                                               data-original-title="{{ 'Wake up' | trans({}, 'ConfigOrionBundle') }}"
+                                                               data-placement="top" rel="tooltip">
+                                                                <span class="glyphicon glyphicon-play"></span>
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="btn btn-default btn-warning"
+                                                               href="{{ path('cron_suspend_instance', {'id':index, 'id_instancia':instancia.id}) }}"
+                                                               data-original-title="{{ 'Suspend' | trans({}, 'ConfigOrionBundle') }}"
+                                                               data-placement="top" rel="tooltip">
+                                                                <span class="glyphicon glyphicon-pause"></span>
+                                                            </a>
+                                                        {% endif %}
+
+                                                        <a class="btn btn-default btn-danger"
+                                                           href="{{ path('cron_remove_instance', {'id':index, 'id_instancia':instancia.id}) }}"
+                                                           data-original-title="{{ 'Remove' | trans({}, 'ConfigOrionBundle') }}"
+                                                           data-placement="top" rel="tooltip">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    {% else %}
+                                                        {% if cron.suspended %}
+                                                            <a class="btn btn-default btn-success"
+                                                               href="{{ path('cron_wakeup', {'id':index}) }}"
+                                                               data-original-title="{{ 'Wake up' | trans({}, 'ConfigOrionBundle') }}"
+                                                               data-placement="top" rel="tooltip">
+                                                                <span class="glyphicon glyphicon-play"></span>
+                                                            </a>
+                                                        {% else %}
+                                                            <a class="btn btn-default btn-warning"
+                                                               href="{{ path('cron_suspend', {'id':index}) }}"
+                                                               data-original-title="{{ 'Suspend' | trans({}, 'ConfigOrionBundle') }}"
+                                                               data-placement="top" rel="tooltip">
+                                                                <span class="glyphicon glyphicon-pause"></span>
+                                                            </a>
+                                                        {% endif %}
+
+                                                        <a class="btn btn-default btn-danger"
+                                                           href="{{ path('cron_remove', {'id':index}) }}"
+                                                           data-original-title="{{ 'Remove' | trans({}, 'ConfigOrionBundle') }}"
+                                                           data-placement="top" rel="tooltip">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <button class="btn btn-default float" data-toggle="collapse"
+                                                        data-target="#cron-{{ index }}"><i
+                                                            class="icon-search"></i>{{ 'Details' | trans({}, 'ConfigOrionBundle') }}
+                                                </button>
+                                            </div>
+                                        </h3>
+                                    </div>
+
+                                    <div class="collapse" id="cron-{{ index }}">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th class="span2" style="color: #808080;"><i
+                                                            class="icon-time"></i>{{ 'Last Run' | trans({}, 'ConfigOrionBundle') }}
+                                                </th>
+                                                <td colspan="2">{{ cron.lastRunTime ? cron.lastRunTime | date : 'Unknown' | trans({}, 'ConfigOrionBundle') }}</td>
+                                            </tr>
+                                            {% if cron.comment %}
+                                                <tr>
+                                                    <th style="color: #049cdb;"><i
+                                                                class="icon-comment"></i>{{ 'Comment' | trans({}, 'ConfigOrionBundle') }}
+                                                    </th>
+                                                    <td colspan="2">{{ cron.comment }}</td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if cron.logFile %}
+                                                <tr>
+                                                    <th style="color: #46a546;"><i
+                                                                class="icon-file"></i>{{ 'Log File' | trans({}, 'ConfigOrionBundle') }}
+                                                    </th>
+                                                    <td>{{ cron.logFile }}</td>
+                                                    <td>
+                                                        {% if cron.logSize %}
+                                                            <a class="btn btn-default btn-info pull-right modal-link"
+                                                               href="{{ path('cron_file', {'id':index, 'type': 'log'}) }}">
+                                                                <i class="icon-search icon-white"></i>
+                                                                {{ 'Log File' | trans({}, 'ConfigOrionBundle') }}
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if cron.errorFile %}
+                                                <tr>
+                                                    <th style="color: #9d261d;"><i
+                                                                class="icon-file"></i>{{ 'Error File' | trans({}, 'ConfigOrionBundle') }}
+                                                    </th>
+                                                    <td>{{ cron.errorFile }}</td>
+                                                    <td>
+                                                        {% if cron.errorSize %}
+                                                            <a class="btn btn-default btn-info pull-right modal-link"
+                                                               href="{{ path('cron_file', {'id':index, 'type': 'error'}) }}">
+                                                                <i class="icon-search icon-white"></i>
+                                                                {{ 'Error file' | trans({}, 'ConfigOrionBundle') }}
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <th style="color: #808080;"><i
+                                                            class="icon-cog"></i>{{ 'Raw cron' | trans({}, 'ConfigOrionBundle') }}
+                                                </th>
+                                                <td colspan="2">
+                                                    <pre>{{ cron }}</pre>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    {{ not loop.last ? '<hr/>' : '' }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default accordion-left">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#cron-table">
+                                <span class="glyphicon glyphicon-list-alt"></span> {{ 'Cron table' | trans({}, 'ConfigOrionBundle') }}
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="cron-table" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <pre>{{ raw }}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

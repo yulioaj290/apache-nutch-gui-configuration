@@ -1,0 +1,116 @@
+{% extends '::base.html.twig' %}
+{% block nav_bar %}
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('instancia') }}">
+            <img src="{{ asset('bundles/configorion/images/Logo.png') }}" />
+            CONFIG-ORI&Oacute;N
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ path('instancia') }}">Instancias</a></li>
+            <li><a href="{{ path('perfil') }}">Perfiles</a></li>
+            <li><a href="{{ path('favorito') }}">Favoritos</a></li>
+            <li><a href="{{ path('reporte') }}">Reportes</a></li>
+            <li><a href="{{ path('graficos') }}">Gr&aacute;ficos</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('sistema') }}">Sistema</a></li>
+            <li><a href="{{ path('usuario') }}">Usuarios</a></li>
+            <li><a href="{{ path('cron_index') }}">{{ 'Cron tasks' | trans({}, 'ConfigOrionBundle') }}</a></li>
+            {% endif %}
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+                    <span class="glyphicon glyphicon-user"></span>
+                    {{ app.user.username }}
+                    {% if app.user.id is defined %}
+                    <b class="caret"></b>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu" role="menu" >
+                        {% if app.user.id is defined %}
+                    <li><a href="{{ path('usuario_perfil', {'id': app.user.id }) }}"><span class="glyphicon glyphicon-picture"></span> Perfil</a></li>
+                    <li><a href="{{ path('usuario_change_password', {'id': app.user.id }) }}"><span class="glyphicon glyphicon-lock"></span> Cambiar contrase&ntilde;a</a></li>
+                        {% endif %}
+                </ul>
+            </li>
+            <li>
+                <a href="{{ path('usuario_logout') }}"><span class="glyphicon glyphicon-off"></span></a>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+{% endblock %}
+
+{% block flash_bags %}
+<!-- bloque de mensajes FlashBag -->
+{% for flashMessage in app.session.flashbag.get('danger') %}
+<div class="alert alert-danger fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-remove-sign"></span>
+    <strong>Error! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+<div class="alert alert-danger fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-remove-sign"></span>
+    <strong>Error! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('warning') %}
+<div class="alert alert-warning fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-warning-sign"></span>
+    <strong>Atenci&oacute;n! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-ok-sign"></span>
+    <strong>Enhorabuena! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-ok-sign"></span>
+    <strong>Enhorabuena! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('info') %}
+<div class="alert alert-info fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    <strong>Informaci&oacute;n! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('message') %}
+<div class="alert alert-info fade in">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    <strong>Informaci&oacute;n! </strong>
+    {{ flashMessage|raw }}
+</div>
+{% endfor %}
+<!-- FIN - bloque de mensajes FlashBag -->
+{% endblock %}
+
+{% block body%}
+
+{% endblock %}

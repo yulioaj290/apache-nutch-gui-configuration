@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sistema>
+    <propiedad>
+        <nombre>archivo_principal</nombre>
+        <valor>nutch-site.xml</valor>        
+        <descripcion>Principal archivo de configuración de Nutch. Esta propiedad se utilizará para cargar la interfaz única por defecto para este archivo. Sólo debe cambiarse el valor de la propiedad si el nombre del archivo nutch-site.xml cambiara en un futuro.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>cantidad_archivos_graficos</nombre>
+        <valor>5</valor>
+        <descripcion>Representa el número de archivos a mostrar en las gráficas de archivos con menos modificaciones y archivos con más modificaciones. Debe contener un valor mayor que 0.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>instancias_directorio</nombre>
+        <valor>/var/www/</valor>
+        <descripcion>Directorio para desplegar instancias de Nutch. Los usuarios del sistema sólo tendrán acceso a archivos dentro de este directorio. Debe terminar con el caracter '/'.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>plugins_directorio</nombre>
+        <valor>plugin.folders</valor>
+        <descripcion>Nombre de la propiedad del archivo principal de configuración de cada instancia de Nutch que hace referencia al directorio donde se encuentran ubicados los plugins.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>plugins_configuracion</nombre>
+        <valor>plugin.includes</valor>
+        <descripcion>Nombre de la propiedad del archivo principal de configuración de cada instancia de Nutch que contiene la configuración de los plugins registrados.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>favoritos_archivo_zip</nombre>
+        <valor>favoritos.zip</valor>
+        <descripcion>Nombre del archivo ZIP utilizado para exportar los archivos favoritos de configuración.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>favoritos_configuracion</nombre>
+        <valor>config.xml</valor>
+        <descripcion>Nombre del archivo que contiene la información de los archivos favoritos de configuración que serán exportados o importados.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>favoritos_directorio_temporal</nombre>
+        <valor>Temp</valor>
+        <descripcion>Ruta del directorio temporal utilizado para importar los archivos favoritos de configuración.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>favoritos_extraer_directorio</nombre>
+        <valor>Temp/Extract</valor>
+        <descripcion>Ruta del directorio temporal utilizado para descomprimir los archivos favoritos de configuración.</descripcion>
+    </propiedad>
+    <propiedad>
+        <nombre>favoritos_directorio</nombre>
+        <valor>favoritos</valor>
+        <descripcion>Nombre del directorio inicial que contiene los archivos favoritos de configuración que serán exportados o importados.</descripcion>
+    </propiedad>
+</sistema>

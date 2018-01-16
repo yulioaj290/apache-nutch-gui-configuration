@@ -1,0 +1,54 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Lista de Perfiles 
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-success active align-right" role="button" href="{{ path('perfil_new') }}">
+                <span class="glyphicon glyphicon-plus"></span> Crear perfil
+            </a>
+            {% endif %}
+        </h1>
+    </div>
+    <div class="panel-default">
+        {% for perfil in perfiles %}
+        <div class="list-object-item-container">
+            <a href="{{ path('perfil_admin', { 'id': perfil.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >
+                <div class="list-object-item-div-first back-perfil"></div>
+                <div class="list-object-item-div-medium">
+                    <h4 class="list-object-item-heading">
+                        <p><span class="label label-primary">{{ perfil.nombre }}</span></p>                            
+                    </h4>
+                    <p class="list-object-item-text">{{ perfil.descripcion }}</p>
+                </div>
+                <div class="list-object-item-div-last">    
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('perfil_aplicar', {'id': perfil.id})}}" rel="tooltip" data-placement="top" data-original-title="Aplicar perfil" >
+                        <button type="button" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span> Aplicar
+                        </button>
+                    </a>                        
+                    {% endif %}
+                    <a href="{{ path('perfil_show', { 'id': perfil.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('perfil_edit', { 'id': perfil.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                        <button type="button" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+                <p class="clearfix"></p>
+            </a>
+        </div>
+       {% endfor %}
+    </div>
+</div>
+
+{% endblock%}

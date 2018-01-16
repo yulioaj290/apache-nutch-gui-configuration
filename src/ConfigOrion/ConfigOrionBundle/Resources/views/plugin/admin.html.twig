@@ -1,0 +1,81 @@
+{% extends 'ConfigOrionBundle::layout.html.twig' %}
+{% block body%}
+
+<ul class="breadcrumb">
+    <li><a href="{{ path('instancia_admin', {'id': instancia.id}) }}">{{ instancia.nombre }}</a></li>
+    <li>Administrar plugin</li>
+</ul>
+
+<div class="panel panel-default accordion-left">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h1>Plugin <i>&quot;{{ document.nombre }}&quot;</i>
+            <a href="{{ path('instancia_admin', { 'id': instancia.id }) }}" class="btn btn-default align-right" role="button" rel="tooltip" data-placement="top" data-original-title="Subir de nivel" >
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('plugin_edit', { 'id_instancia': instancia.id, 'id': document.id }) }}" class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+            {% endif %}
+            <a href="{{ path('plugin_show', { 'id_instancia': instancia.id, 'id': document.id }) }}" class="btn btn-primary align-right margin-basic-right" role="button" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+            </a>
+        </h1>
+    </div>
+    <div class="panel-body">
+        {{ document.descripcion }}
+    </div>
+
+    <!-- Nav Tabs -->
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#archivos" data-toggle="tab"><span class="glyphicon glyphicon-file"></span> Lista de archivos</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{ path('archivo_new', {'id_parent': document.id, 'parent': 'plugin' }) }}"><span class="glyphicon glyphicon-plus"></span> Registrar archivo</a></li>
+        {% endif %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="archivos">
+            <div class="list-object">
+            {% for archivo in archivos %}
+                <div id="item-modificacion-{{ archivo.id }}" class="list-object-item-container">
+                    <a href="{{ path('archivo_admin', { 'id': archivo.id }) }}" class="list-object-item" rel="tooltip" data-placement="top" data-original-title="Administrar datos" >
+                        <div class="list-object-item-div-first back-archivo"></div>
+                        <div class="list-object-item-div-medium">
+                            <h4 class="list-object-item-heading">
+                                <p><span class="label label-primary">{{ archivo.nombre }}</span>
+                                    <span class="label label-warning">{% if(archivo.formato|lower == 'null') %}{{ 'Sin extensi&oacute;n' }}{% else %}{{ archivo.formato }}{% endif %}</span>
+                                    <span class="label label-primary">Modificaciones</span><span class="label label-success">{{ archivo.getModificaciones()|length }}</span></p>
+                                <p><span class="label label-default">{{ archivo.ruta }}</span></p>
+                            </h4>
+                            <p class="list-object-item-text">{{ archivo.descripcion }}</p>
+                        </div>
+                        <div class="list-object-item-div-last">
+                            <a href="{{ path('archivo_show', { 'id_parent': document.id, 'parent': 'plugin', 'id': archivo.id }) }}" rel="tooltip" data-placement="top" data-original-title="Ver detalles" >
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </button>
+                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('archivo_edit', { 'id_parent': document.id, 'parent': 'plugin', 'id': archivo.id }) }}" rel="tooltip" data-placement="top" data-original-title="Editar" >
+                                <button type="button" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <p class="clearfix"></p>
+                    </a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#item-list-modificacion').popover();
+</script>
+{% endblock%} 

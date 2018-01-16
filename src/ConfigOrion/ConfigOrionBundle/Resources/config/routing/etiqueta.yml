@@ -1,0 +1,30 @@
+etiqueta:
+    pattern:  /
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:index" }
+
+etiqueta_show:
+    pattern:  /archivo/{id_archivo}/{id}/ver
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:show" }
+
+etiqueta_new:
+    pattern:  /nuevo
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:new" }
+
+etiqueta_create:
+    pattern:  /crear
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:create" }
+    requirements: { _method: post }
+
+etiqueta_edit:
+    pattern:  /archivo/{id_archivo}/{id}/editar
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:edit" }
+
+etiqueta_update:
+    pattern:  /archivo/{id_archivo}/{id}/actualizar
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:update" }
+    requirements: { _method: post|put }
+
+etiqueta_delete:
+    pattern:  /archivo/{id_archivo}/{id}/eliminar
+    defaults: { _controller: "ConfigOrionBundle:etiqueta:delete" }
+    requirements: { _method: post|delete }
